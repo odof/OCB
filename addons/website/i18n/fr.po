@@ -1605,8 +1605,9 @@ msgstr ""
 
 #. module: website
 #: view:website:website.403 view:website:website.404
+# Traduction par OpenFire
 msgid "Maybe you were looking for one of these popular pages ?"
-msgstr ""
+msgstr "Peut être que vous voulez aller sur une de ces pages ?"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -2544,16 +2545,20 @@ msgstr ""
 
 #. module: website
 #: view:website:website.403
+# Traduction par OpenFire
 msgid "The page you were looking for could not be authorized."
-msgstr ""
+msgstr "Vous n'êtes pas autorisés à consulter cette page. Vous devez vous <a href=\"/web/login/\">connecter</a> auparavant."
 
 #. module: website
 #: view:website:website.404
+# Traduiction OpenFire
 msgid ""
 "The page you were looking for could not be found; it is possible you have\n"
 "                        typed the address incorrectly, but it has most probably been removed due\n"
 "                        to the recent website reorganisation."
-msgstr ""
+msgstr "La page que vous demandez n'existe pas; Il est possible que vous avez\n"
+"                        tapé une mauvaise adresse, mais il est plus probable qu'elle a été supprimée\n"
+"                        suite à une réorganisation du site."
 
 #. module: website
 #: view:website:website.500
