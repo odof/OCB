@@ -47,7 +47,12 @@ class sale_order(osv.osv):
 
     def _amount_line_tax(self, cr, uid, line, context=None):
         val = 0.0
-        for c in self.pool.get('account.tax').compute_all(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, line.product_id, line.order_id.partner_id)['taxes']:
+        line_obj = self.pool['sale.order.line']
+        price = line_obj._calc_line_base_price(cr, uid, line, context=context)
+        qty = line_obj._calc_line_quantity(cr, uid, line, context=context)
+        for c in self.pool['account.tax'].compute_all(
+                cr, uid, line.tax_id, price, qty, line.product_id,
+                line.order_id.partner_id)['taxes']:
             val += c.get('amount', 0.0)
         return val
 
@@ -851,6 +856,12 @@ class sale_order_line(osv.osv):
                 return True
         return False
 
+    def _calc_line_base_price(self, cr, uid, line, context=None):
+        return line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+
+    def _calc_line_quantity(self, cr, uid, line, context=None):
+        return line.product_uom_qty
+
     def _amount_line(self, cr, uid, ids, field_name, arg, context=None):
         tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
@@ -858,8 +869,11 @@ class sale_order_line(osv.osv):
         if context is None:
             context = {}
         for line in self.browse(cr, uid, ids, context=context):
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = tax_obj.compute_all(cr, uid, line.tax_id, price, line.product_uom_qty, line.product_id, line.order_id.partner_id)
+            price = self._calc_line_base_price(cr, uid, line, context=context)
+            qty = self._calc_line_quantity(cr, uid, line, context=context)
+            taxes = tax_obj.compute_all(cr, uid, line.tax_id, price, qty,
+                                        line.product_id,
+                                        line.order_id.partner_id)
             cur = line.order_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
         return res
@@ -1065,7 +1079,7 @@ class sale_order_line(osv.osv):
         return {'value': value}
 
     def create(self, cr, uid, values, context=None):
-        if values.get('order_id') and values.get('product_id') and  any(f not in values for f in ['name', 'price_unit', 'type', 'product_uom_qty', 'product_uom']):
+        if values.get('order_id') and values.get('product_id') and  any(f not in values for f in ['name', 'price_unit', 'product_uom_qty', 'product_uom']):
             order = self.pool['sale.order'].read(cr, uid, values['order_id'], ['pricelist_id', 'partner_id', 'date_order', 'fiscal_position'], context=context)
             defaults = self.product_id_change(cr, uid, [], order['pricelist_id'][0], values['product_id'],
                 qty=float(values.get('product_uom_qty', False)),
