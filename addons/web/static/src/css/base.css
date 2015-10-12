@@ -65,7 +65,7 @@
 }
 
 .navbar .oe_topbar_name {
-  max-width: 150px;
+  max-width: 300px; /* Modification OpenFire de 150px à 300px pour que les noms de base long ne soient pas tronqués */ 
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
