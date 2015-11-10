@@ -14571,7 +14571,7 @@ msgstr "Partagé"
 #. module: base
 #: selection:res.partner,type:0
 msgid "Shipping address"
-msgstr "Adresse d'expédition"
+msgstr "Livraison"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_search
