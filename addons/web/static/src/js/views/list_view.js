@@ -1071,6 +1071,10 @@ ListView.List = Class.extend( /** @lends instance.web.ListView.List# */{
                     return;
                 }
                 $(self).trigger('deleted', [[self.row_id($row)]]);
+                // IE Edge go crazy when we use confirm dialog and remove the focused element
+                if(document.hasFocus && !document.hasFocus()) {
+                    $('<input />').appendTo('body').focus().remove();
+                }
             })
             .delegate('td.oe_list_field_cell button', 'click', function (e) {
                 e.stopPropagation();
