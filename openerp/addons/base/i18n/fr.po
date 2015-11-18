@@ -14541,9 +14541,12 @@ msgstr "Pour des raisons de sécurité, les mots de passes vides ne sont pas aut
 #: model:ir.ui.menu,name:base.menu_mrp_config
 #: model:ir.ui.menu,name:base.menu_project_general_settings
 #: model:ir.ui.menu,name:base.menu_sale_general_settings
+msgid "Settings"
+msgstr "Configuration"
+
 #: model:res.groups,name:base.group_system
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "Administration"
 
 #. module: base
 #: model:res.country,name:base.sc
