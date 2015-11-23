@@ -1600,6 +1600,12 @@ def db_list(force=False, httprequest=None):
 def db_filter(dbs, httprequest=None):
     httprequest = httprequest or request.httprequest
     h = httprequest.environ.get('HTTP_HOST', '').split(':')[0]
+    # Ajout OpenFire pour orienter vers la bonne base en fonction de l'URL d'après une table de correspondance (variable of_url_base du fichier de configuration)
+    if openerp.tools.config.get('of_url_base'):
+        of_url_base = eval(openerp.tools.config['of_url_base'])
+        if h in of_url_base and of_url_base[h] in dbs:
+            return [of_url_base[h]]
+    # Fin ajout OpenFire 
     d, _, r = h.partition('.')
     if d == "www" and r:
         d = r.partition('.')[0]
