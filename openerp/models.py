@@ -3908,7 +3908,7 @@ class BaseModel(object):
                 if column._classic_write and not hasattr(column, '_fnct_inv'):
                     if not (has_trans and column.translate and not callable(column.translate)):
                         # vals[field] is not a translation: update the table
-                        updates.append((field, '%s', column._symbol_set[1](vals[field])))
+                        updates.append((field, column._symbol_set[0], column._symbol_set[1](vals[field])))
                     direct.append(field)
                 else:
                     upd_todo.append(field)
@@ -4228,7 +4228,7 @@ class BaseModel(object):
         for field in vals:
             current_field = self._columns[field]
             if current_field._classic_write:
-                updates.append((field, '%s', current_field._symbol_set[1](vals[field])))
+                updates.append((field, current_field._symbol_set[0], current_field._symbol_set[1](vals[field])))
 
                 #for the function fields that receive a value, we set them directly in the database
                 #(they may be required), but we also need to trigger the _fct_inv()
@@ -4461,7 +4461,7 @@ class BaseModel(object):
                                 value[v] = value[v][0]
                             except:
                                 pass
-                        updates.append((v, '%s', column._symbol_set[1](value[v])))
+                        updates.append((v, column._symbol_set[0], column._symbol_set[1](value[v])))
                     if updates:
                         query = 'UPDATE "%s" SET %s WHERE id = %%s' % (
                             self._table, ','.join('"%s"=%s' % u[:2] for u in updates),
@@ -4916,6 +4916,8 @@ class BaseModel(object):
                     del record['id']
                     # remove source to avoid triggering _set_src
                     del record['source']
+                    # duplicated record is not linked to any module
+                    del record['module']
                     record.update({'res_id': target_id})
                     if user_lang and user_lang == record['lang']:
                         # 'source' to force the call to _set_src
@@ -5394,24 +5396,27 @@ class BaseModel(object):
         Returns a new version of this recordset attached to the provided
         user.
 
-        By default this returns a `SUPERUSER` recordset, where access control
-        and record rules are bypassed.
+        By default this returns a ``SUPERUSER`` recordset, where access
+        control and record rules are bypassed.
 
         .. note::
-            Using `sudo` could cause data access to cross the boundaries of
-            record rules, possibly mixing records that are meant to be
-            isolated (e.g. records from different companies in multi-company
-            environments).
+
+            Using ``sudo`` could cause data access to cross the
+            boundaries of record rules, possibly mixing records that
+            are meant to be isolated (e.g. records from different
+            companies in multi-company environments).
 
             It may lead to un-intuitive results in methods which select one
             record among many - for example getting the default company, or
             selecting a Bill of Materials.
 
         .. note::
+
             Because the record rules and access control will have to be
             re-evaluated, the new recordset will not benefit from the current
             environment's data cache, so later data access may incur extra
             delays while re-fetching from the database.
+
         """
         return self.with_env(self.env(user=user))
 
@@ -5904,20 +5909,23 @@ class BaseModel(object):
         if match:
             method, params = match.groups()
 
+            class RawRecord(object):
+                def __init__(self, record):
+                    self._record = record
+                def __getitem__(self, name):
+                    field = self._record._fields[name]
+                    value = self._record[name]
+                    return field.convert_to_write(value)
+                def __getattr__(self, name):
+                    return self[name]
+
             # evaluate params -> tuple
             global_vars = {'context': self._context, 'uid': self._uid}
             if self._context.get('field_parent'):
-                class RawRecord(object):
-                    def __init__(self, record):
-                        self._record = record
-                    def __getattr__(self, name):
-                        field = self._record._fields[name]
-                        value = self._record[name]
-                        return field.convert_to_write(value)
                 record = self[self._context['field_parent']]
                 global_vars['parent'] = RawRecord(record)
-            field_vars = self._convert_to_write(self._cache)
-            params = eval("[%s]" % params, global_vars, field_vars)
+            field_vars = RawRecord(self)
+            params = eval("[%s]" % params, global_vars, field_vars, nocopy=True)
 
             # call onchange method with context when possible
             args = (self._cr, self._uid, self._origin.ids) + tuple(params)

@@ -1,4 +1,4 @@
-odoo.define('mail.ChatComposer', function (require) {
+odoo.define('mail.composer', function (require) {
 "use strict";
 
 var chat_manager = require('mail.chat_manager');
@@ -23,6 +23,7 @@ var accented_letters_mapping = {
     'oe': 'œ',
     'u': '[ùúûűü]',
     'y': '[ýÿ]',
+    ' ': '[()\\[\\]]',
 };
 
 // The MentionManager allows the Composer to register listeners. For each
@@ -218,7 +219,8 @@ var MentionManager = Widget.extend({
      */
     generate_links: function (s) {
         var self = this;
-        var mention_link = "<a href='#' class='%s' data-oe-id='%s' data-oe-model='%s'>%s%s</a>";
+        var base_href = session.url("/web");
+        var mention_link = "<a href='%s' class='%s' data-oe-id='%s' data-oe-model='%s' target='_blank'>%s%s</a>";
         _.each(this.listeners, function (listener) {
             var selection = listener.selection;
             if (selection.length) {
@@ -229,7 +231,8 @@ var MentionManager = Widget.extend({
                     var match = matches[i];
                     var end_index = match.index + match[0].length;
                     var match_name = match[0].substring(1);
-                    var processed_text = _.str.sprintf(mention_link, listener.redirect_classname, selection[i].id, listener.model, listener.delimiter, match_name);
+                    var href = base_href + _.str.sprintf("#model=%s&id=%s", listener.model, selection[i].id);
+                    var processed_text = _.str.sprintf(mention_link, href, listener.redirect_classname, selection[i].id, listener.model, listener.delimiter, match_name);
                     var subtext = s.substring(start_index, end_index).replace(match[0], processed_text);
                     substrings.push(subtext);
                     start_index = end_index;
@@ -307,7 +310,7 @@ var MentionManager = Widget.extend({
 
 });
 
-var Composer = Widget.extend({
+var BasicComposer = Widget.extend({
     template: "mail.ChatComposer",
 
     events: {
@@ -327,6 +330,7 @@ var Composer = Widget.extend({
             input_max_height: 150,
             input_min_height: 28,
             mention_fetch_limit: 8,
+            send_text: _('Send'),
         });
         this.context = this.options.context;
 
@@ -391,10 +395,14 @@ var Composer = Widget.extend({
         return this._super();
     },
 
+    toggle: function(state) {
+        this.$el.toggle(state);
+    },
+
     preprocess_message: function () {
         // Return a deferred as this function is extended with asynchronous
         // behavior for the chatter composer
-        var value = this.$input.val().replace(/\n|\r/g, '<br/>');
+        var value = _.escape(this.$input.val()).replace(/\n|\r/g, '<br/>');
         return $.when({
             content: this.mention_manager.generate_links(value),
             attachment_ids: _.pluck(this.get('attachment_ids'), 'id'),
@@ -651,6 +659,38 @@ var Composer = Widget.extend({
     },
 });
 
-return Composer;
+var ExtendedComposer = BasicComposer.extend({
+    init: function (parent, options) {
+        options = _.defaults(options || {}, {
+            input_min_height: 120,
+        });
+        this.extended = true;
+        return this._super(parent, options);
+    },
+
+    start: function () {
+        this.$subject_input = this.$(".o_composer_subject input");
+        return this._super.apply(this, arguments);
+    },
+
+    preprocess_message: function () {
+        var self = this;
+        return this._super().then(function (message) {
+            var subject = self.$subject_input.val();
+            self.$subject_input.val("");
+            message.subject = subject;
+            return message;
+        });
+    },
+
+    prevent_send: function () {
+        return true;
+    },
+});
+
+return {
+    BasicComposer: BasicComposer,
+    ExtendedComposer: ExtendedComposer,
+};
 
 });
