@@ -172,7 +172,7 @@ class AccountMove(models.Model):
             if self.user_has_groups('account.group_account_manager'):
                 lock_date = move.company_id.fiscalyear_lock_date
             if move.date <= lock_date:
-                raise UserError(_("You cannot add/modify entries prior to and inclusive of the lock date %s. Check the company settings or ask someone with the 'Adviser' role" % (lock_date)))
+                raise UserError(_("You cannot add/modify entries prior to and inclusive of the lock date %s. Check the company settings or ask someone with the 'Adviser' role") % (lock_date))
         return True
 
     @api.multi
@@ -1095,6 +1095,7 @@ class AccountMoveLine(models.Model):
         """ Prepare the values used to create() an account.analytic.line upon validation of an account.move.line having
             an analytic account. This method is intended to be extended in other modules.
         """
+        amount = (self.credit or 0.0) - (self.debit or 0.0)
         return {
             'name': self.name,
             'date': self.date,
@@ -1102,7 +1103,7 @@ class AccountMoveLine(models.Model):
             'unit_amount': self.quantity,
             'product_id': self.product_id and self.product_id.id or False,
             'product_uom_id': self.product_uom_id and self.product_uom_id.id or False,
-            'amount': (self.credit or 0.0) - (self.debit or 0.0),
+            'amount': self.company_currency_id.compute(amount, self.currency_id) if self.currency_id else amount,
             'general_account_id': self.account_id.id,
             'ref': self.ref,
             'move_id': self.id,
@@ -1194,7 +1195,16 @@ class AccountPartialReconcile(models.Model):
                     if not self.company_id.expense_currency_exchange_account_id.id:
                         raise UserError(_("You should configure the 'Loss Exchange Rate Account' in the accounting settings, to manage automatically the booking of accounting entries related to differences between exchange rates."))
                     amount_diff = rec.company_id.currency_id.round(rec.amount_currency * rate_diff)
-                    move = rec.env['account.move'].create({'journal_id': rec.company_id.currency_exchange_journal_id.id, 'rate_diff_partial_rec_id': rec.id})
+                    move_vals = {'journal_id': rec.company_id.currency_exchange_journal_id.id, 'rate_diff_partial_rec_id': rec.id}
+
+                    # The move date should be the maximum date between payment and invoice (in case
+                    # of payment in advance). However, we should make sure the move date is not
+                    # recorded after the end of year closing.
+                    move_date = max(rec.debit_move_id.date, rec.credit_move_id.date)
+                    if move_date > rec.company_id.fiscalyear_lock_date:
+                        move_vals['date'] = move_date
+
+                    move = rec.env['account.move'].create(move_vals)
                     line_to_reconcile = rec.env['account.move.line'].with_context(check_move_validity=False).create({
                         'name': _('Currency exchange rate difference'),
                         'debit': amount_diff < 0 and -amount_diff or 0.0,
@@ -1202,6 +1212,7 @@ class AccountPartialReconcile(models.Model):
                         'account_id': rec.debit_move_id.account_id.id,
                         'move_id': move.id,
                         'currency_id': rec.currency_id.id,
+                        'amount_currency': 0.0,
                     })
                     rec.env['account.move.line'].create({
                         'name': _('Currency exchange rate difference'),
