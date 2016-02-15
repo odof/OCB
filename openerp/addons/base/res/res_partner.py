@@ -604,7 +604,8 @@ class res_partner(osv.Model, format_address):
                 name = "%s <%s>" % (name, record.email)
             if context.get('html_format'):
                 name = name.replace('\n', '<br/>')
-            name = name.replace("\n", ", ") # Ajout OpenFire
+            if context.get ('of_show_address_line'):  # Ajout OpenFire
+                name = name.replace("\n", ", ")  # Ajout OpenFire
             res.append((record.id, name))
         return res
 
