@@ -109,6 +109,7 @@
         </record>
     </data>
 
+<!--
     <data noupdate="1">
 
         <record id="project_project_data" model="project.project">
@@ -329,6 +330,6 @@
         <record id="project_task_data_14" model="project.task">
             <field name="displayed_image_id" ref="msg_task_data_14_attach"/>
         </record>
-
     </data>
+-->
 </openerp>
