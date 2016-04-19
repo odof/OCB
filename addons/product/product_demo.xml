@@ -10,6 +10,13 @@
     Resource: product.category
     -->
  
+        <record id="product_category_all" model="product.category">
+            <field name="name">All</field>
+        </record>
+        <record id="product_category_1" model="product.category">
+            <field name="parent_id" ref="product_category_all"/>
+            <field name="name">Saleable</field>
+        </record>
         <record id="product_category_2" model="product.category">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Internal</field>
