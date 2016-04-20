@@ -7,14 +7,15 @@
 # Denis Ledoux <dle@odoo.com>, 2016
 # Esteban Echeverry <tebanep@nubark.com>, 2016
 # Juan Pablo Vargas Soruco <juanpablo.vargas@cruzoil.com>, 2016
-# Mateo Tibaquirá <nestormateo@gmail.com>, 2015
+# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2015
+# Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
 # Thomas Groutars, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-17 14:09+0000\n"
-"PO-Revision-Date: 2016-03-17 20:20+0000\n"
+"PO-Revision-Date: 2016-03-31 04:28+0000\n"
 "Last-Translator: Esteban Echeverry <tebanep@nubark.com>\n"
 "Language-Team: Spanish (Colombia) (http://www.transifex.com/odoo/odoo-9/language/es_CO/)\n"
 "MIME-Version: 1.0\n"
@@ -1656,7 +1657,7 @@ msgstr "Activos"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_asset
 msgid "Assets management"
-msgstr "Gestión de Activos"
+msgstr "Gestión de activos"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_account_ids
@@ -6439,7 +6440,7 @@ msgstr "Conector Plaid"
 #. module: account
 #: model:ir.model,name:account.model_web_planner
 msgid "Planner"
-msgstr "Agenda"
+msgstr "Planificador"
 
 #. module: account
 #: code:addons/account/wizard/pos_box.py:27
@@ -9232,7 +9233,7 @@ msgstr "No puede realizar esta modificación en un asiento conciliado. Sólo pue
 msgid ""
 "You cannot empty the account number once set.\n"
 "If you would like to delete the account number, you can do it from the Bank Accounts list."
-msgstr "Usted no puede eliminar el número de cuenta una vez establecido.\nSi usted quiere eliminar el número de cuenta, usted puede hacerlo desde la lista de cuentas de Banco."
+msgstr "Usted no puede eliminar el número de cuenta una vez establecido.\nSi usted quiere eliminar el número de cuenta, puede hacerlo desde la lista de Cuentas Bancarias."
 
 #. module: account
 #: code:addons/account/models/account.py:96
