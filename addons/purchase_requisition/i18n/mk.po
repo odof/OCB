@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-29 10:26+0000\n"
-"PO-Revision-Date: 2016-06-03 14:59+0000\n"
+"PO-Revision-Date: 2016-08-12 14:50+0000\n"
 "Last-Translator: Aleksandar Vangelovski <aleksandarv@hbee.eu>\n"
 "Language-Team: Macedonian (http://www.transifex.com/odoo/odoo-9/language/mk/)\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr ""
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.report_purchaserequisitions
 msgid "<strong>Selection Type:</strong><br/>"
-msgstr ""
+msgstr "<strong>Тип на селекција:</strong><br/>"
 
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.report_purchaserequisitions
@@ -71,7 +71,7 @@ msgstr ""
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.report_purchaserequisitions
 msgid "<strong>Vendor </strong>"
-msgstr ""
+msgstr "<strong>Добавувач </strong>"
 
 #. module: purchase_requisition
 #: model:ir.actions.act_window,help:purchase_requisition.action_purchase_requisition
@@ -97,7 +97,7 @@ msgstr "Аналитичка сметка"
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.view_purchase_requisition_form
 msgid "Approved by Vendor"
-msgstr ""
+msgstr "Одобрено од добавувач"
 
 #. module: purchase_requisition
 #: model:ir.actions.act_window,name:purchase_requisition.action_bid_line_qty
@@ -211,12 +211,12 @@ msgstr "Кликни да креираш нов процес на повик з�
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.view_purchase_requisition_form
 msgid "Close Call for Tenders"
-msgstr ""
+msgstr "Затвори повици на тендери"
 
 #. module: purchase_requisition
 #: model:ir.ui.view,arch_db:purchase_requisition.view_purchase_requisition_filter
 msgid "Closed Tenders"
-msgstr ""
+msgstr "Затворени тендери"
 
 #. module: purchase_requisition
 #: model:ir.model.fields,field_description:purchase_requisition.field_purchase_requisition_company_id
