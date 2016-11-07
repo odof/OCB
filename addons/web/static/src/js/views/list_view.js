@@ -13,6 +13,7 @@ var session = require('web.session');
 var Sidebar = require('web.Sidebar');
 var utils = require('web.utils');
 var View = require('web.View');
+var $ = require('$');
 
 var Class = core.Class;
 var _t = core._t;
@@ -280,7 +281,7 @@ var ListView = View.extend( /** @lends instance.web.ListView# */ {
         if (!this.$buttons) {
             this.$buttons = $(QWeb.render("ListView.buttons", {'widget': this}));
 
-            this.$buttons.find('.o_list_button_add').click(this.proxy('do_add_record'));
+            this.$buttons.on('click', '.o_list_button_add', this.proxy('do_add_record'));
 
             $node = $node || this.options.$buttons;
             if ($node) {
@@ -560,11 +561,12 @@ var ListView = View.extend( /** @lends instance.web.ListView# */ {
                 self.records.remove(record);
                 return;
             }
-            _.each(values, function (value, key) {
+            // _.each is broken if a field "length" is present
+            for (var key in values) {
                 if (fields[key] && fields[key].type === 'many2many')
                     record.set(key + '__display', false, {silent: true});
-                record.set(key, value, {silent: true});            
-            });
+                record.set(key, values[key], {silent: true});
+            }
             record.trigger('change', record);
 
             /* When a record is reloaded, there is a rendering lag because of the addition/suppression of 
@@ -713,6 +715,7 @@ var ListView = View.extend( /** @lends instance.web.ListView# */ {
             return field.name === name;
         });
         if (!action) { return; }
+        action = $.extend(true, {}, action);
         if ('confirm' in action && !window.confirm(action.confirm)) {
             return;
         }
@@ -1826,7 +1829,6 @@ var Column = Class.extend({
             id: id,
             tag: tag
         });
-
         this.modifiers = attrs.modifiers ? JSON.parse(attrs.modifiers) : {};
         delete attrs.modifiers;
         _.extend(this, attrs);
@@ -1853,10 +1855,14 @@ var Column = Class.extend({
         if (this.type !== 'integer' && this.type !== 'float' && this.type !== 'monetary') {
             return {};
         }
-        var aggregation_func = this['group_operator'] || 'sum';
-        if (!(aggregation_func in this)) {
+
+        var aggregation_func = (this.sum && 'sum') || (this.avg && 'avg') ||
+                               (this.max && 'max') || (this.min && 'min');
+
+        if (!aggregation_func) {
             return {};
         }
+
         var C = function (fn, label) {
             this['function'] = fn;
             this.label = label;
