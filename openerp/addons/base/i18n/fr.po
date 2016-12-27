@@ -7055,7 +7055,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_partner_category_form
 #: model:ir.ui.view,arch_db:base.view_partner_category_list
 msgid "Contact Tags"
-msgstr ""
+msgstr "Étiquettes"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_title_contact
@@ -15508,7 +15508,7 @@ msgstr "Étiquette"
 #: model:ir.model.fields,field_description:base.field_res_users_category_id
 #: model:ir.ui.menu,name:base.menu_partner_category_form
 msgid "Tags"
-msgstr "Tags"
+msgstr "Étiquettes"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
