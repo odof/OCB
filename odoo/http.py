@@ -1494,7 +1494,9 @@ def db_filter(dbs, httprequest=None):
     d, _, r = h.partition('.')
     if d == "www" and r:
         d = r.partition('.')[0]
-    r = odoo.tools.config['dbfilter'].replace('%h', h).replace('%d', d)
+    # Modification OpenFire pour modifier le db_filter en fonction de l'url de connexion
+    dbfilter = eval(odoo.tools.config.get('of_url_dbfilter', "{}")).get(h, odoo.tools.config['dbfilter'])
+    r = dbfilter.replace('%h', h).replace('%d', d)
     dbs = [i for i in dbs if re.match(r, i)]
     return dbs
 
