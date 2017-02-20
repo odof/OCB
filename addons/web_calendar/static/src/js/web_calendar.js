@@ -21,33 +21,28 @@ var QWeb = core.qweb;
 function get_fc_defaultOptions() {
     var dateFormat = time.strftime_to_moment_format(_t.database.parameters.date_format);
 
-    // Début ajout OpenFire pour résoudre bogue affichage heure am/pm base proposition patch https://github.com/odoo/odoo/pull/11234/files
     // moment.js converts '%p' to 'A' for 'AM/PM'
-	// But FullCalendar v1.6.4 supports 'TT' format for 'AM/PM' but not 'A'
-	// NB: should be removed when fullcalendar is updated to 2.0 because it would
-	// be supported. See the following link
-	// http://fullcalendar.io/wiki/Upgrading-to-v2/
-	var timeFormat = time.strftime_to_moment_format(_t.database.parameters.time_format).replace('A', 'TT');
-	timeFormat = timeFormat.replace(':ss', ''); // modif OpenFire pour retirer les secondes
-	// Fin ajout OpenFire
-	
+    // But FullCalendar v1.6.4 supports 'TT' format for 'AM/PM' but not 'A'
+    // NB: should be removed when fullcalendar is updated to 2.0 because it would
+    // be supported. See the following link
+    // http://fullcalendar.io/wiki/Upgrading-to-v2/
+    var timeFormat = time.strftime_to_moment_format(_t.database.parameters.time_format).replace('A', 'TT');
+
     // adapt format for fullcalendar v1.
     // see http://fullcalendar.io/docs1/utilities/formatDate/
     var conversions = [['YYYY', 'yyyy'], ['YY', 'y'], ['DDDD', 'dddd'], ['DD', 'dd']];
     _.each(conversions, function(conv) {
         dateFormat = dateFormat.replace(conv[0], conv[1]);
     });
-    
-	// Début ajout OpenFire pour résoudre bogue affichage heure am/pm
+
     // If 'H' is contained in timeFormat display '10:00'
-	// Else display '10 AM'. 
-	// See : http://fullcalendar.io/docs1/utilities/formatDate/
-	var hourFormat = function(timeFormat){
-		if (/H/.test(timeFormat))
-			return 'HH:mm';
-		return 'hh TT';
-	};
-	// Fin ajout OpenFire
+    // Else display '10 AM'. 
+    // See : http://fullcalendar.io/docs1/utilities/formatDate/
+    var hourFormat = function(timeFormat){
+        if (/H/.test(timeFormat))
+            return 'HH:mm';
+        return 'hh TT';
+    };
 
     return {
         weekNumberTitle: _t("W"),
@@ -60,12 +55,10 @@ function get_fc_defaultOptions() {
         weekNumberCalculation: function(date) {
             return moment(date).week();
         },
-        // Début ajout OpenFire pour résoudre bogue affichage heure am/pm
         axisFormat: hourFormat(timeFormat),
         // Correct timeformat for agendaWeek and agendaDay
         // http://fullcalendar.io/docs1/text/timeFormat/
         timeFormat: timeFormat + ' {- ' + timeFormat + '}',
-        // Fin ajout OpenFire
         weekNumbers: true,
         titleFormat: {
             month: 'MMMM yyyy',
