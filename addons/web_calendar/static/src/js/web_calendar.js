@@ -27,6 +27,7 @@ function get_fc_defaultOptions() {
     // be supported. See the following link
     // http://fullcalendar.io/wiki/Upgrading-to-v2/
     var timeFormat = time.strftime_to_moment_format(_t.database.parameters.time_format).replace('A', 'TT');
+    timeFormat = timeFormat.replace(':ss', ''); // modif OpenFire pour retirer les secondes
 
     // adapt format for fullcalendar v1.
     // see http://fullcalendar.io/docs1/utilities/formatDate/
