@@ -349,7 +349,7 @@ class StockMove(models.Model):
             raise UserError(_('Cannot unreserve a done move'))
         self.quants_unreserve()
         if not self.env.context.get('no_state_change'):
-            waiting = self.filtered(lambda move: move.get_ancestors())
+            waiting = self.filtered(lambda move: move.procure_method == 'make_to_order' or move.get_ancestors())
             waiting.write({'state': 'waiting'})
             (self - waiting).write({'state': 'confirmed'})
 
@@ -375,7 +375,7 @@ class StockMove(models.Model):
                     rules = Push.search(domain + [('route_id', 'in', move.picking_id.picking_type_id.warehouse_id.route_ids.ids)], order='route_sequence, sequence', limit=1)
             if not rules:
                 # if no specialized push rule has been found yet, we try to find a general one (without route)
-                rules = Push.search(domain + [('route_id', '=', False)], order='sequence')
+                rules = Push.search(domain + [('route_id', '=', False)], order='sequence', limit=1)
             # Make sure it is not returning the return
             if rules and (not move.origin_returned_move_id or move.origin_returned_move_id.location_dest_id.id != rules.location_dest_id.id):
                 rules._apply(move)
@@ -564,6 +564,7 @@ class StockMove(models.Model):
         moves_to_assign = self.env['stock.move']
         moves_to_do = self.env['stock.move']
         operations = self.env['stock.pack.operation']
+        ancestors_list = {}
 
         # work only on in progress moves
         moves = self.filtered(lambda move: move.state in ['confirmed', 'waiting', 'assigned'])
@@ -586,6 +587,7 @@ class StockMove(models.Model):
                 # we always search for yet unassigned quants
                 main_domain[move.id] = [('reservation_id', '=', False), ('qty', '>', 0)]
 
+                ancestors_list[move.id] = True if ancestors else False
                 if move.state == 'waiting' and not ancestors:
                     # if the waiting move hasn't yet any ancestor (PO/MO not confirmed yet), don't find any quant available in stock
                     main_domain[move.id] += [('id', '=', False)]
@@ -629,7 +631,9 @@ class StockMove(models.Model):
                             lot_qty[lot] -= qty
                             move_qty -= qty
 
-        for move in moves_to_do:
+        # Sort moves to reserve first the ones with ancestors, in case the same product is listed in
+        # different stock moves.
+        for move in sorted(moves_to_do, key=lambda x: -1 if ancestors_list.get(x.id) else 0):
             # then if the move isn't totally assigned, try to find quants without any specific domain
             if move.state != 'assigned' and not self.env.context.get('reserve_only_ops'):
                 qty_already_assigned = move.reserved_availability
@@ -686,7 +690,7 @@ class StockMove(models.Model):
             if len(reserved_quant_ids) == 0 and move.partially_available:
                 vals['partially_available'] = False
             if move.state == 'assigned':
-                if move.find_move_ancestors():
+                if move.procure_method == 'make_to_order' or move.find_move_ancestors():
                     vals['state'] = 'waiting'
                 else:
                     vals['state'] = 'confirmed'
