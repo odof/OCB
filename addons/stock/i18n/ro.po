@@ -223,6 +223,11 @@ msgid ""
 "                                        <span class=\"small\">&gt; 50 vendors</span>\n"
 "                                    </span>"
 msgstr ""
+"<span class=\"panel-title\">\n"
+"                                        <span class=\"fa\" data-icon=\"&#57408;\"/>\n"
+"                                        <strong>Importați</strong><br/>\n"
+"                                        <span class=\"small\">&gt; 50 furnizori</span>\n"
+"                                    </span>"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
@@ -622,6 +627,8 @@ msgstr ""
 msgid ""
 "Add an internal note that will be printed on the Picking Operations sheet"
 msgstr ""
+"Adăugați o notă internă pentru ca aceasta să fie tipărite pe documentele de "
+"mișcare de stoc."
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -647,7 +654,7 @@ msgstr "Avansat"
 #. module: stock
 #: selection:stock.config.settings,group_stock_adv_location:0
 msgid "Advanced routing of products using rules"
-msgstr ""
+msgstr "Rute avansate de aprovizionare utilizând reguli."
 
 #. module: stock
 #: selection:stock.move,procure_method:0
@@ -796,7 +803,7 @@ msgstr "Aplicabil la depozit"
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_procurement_rule_form_stock_inherit
 msgid "Applied On"
-msgstr ""
+msgstr "Aplicat în"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_stock_config_settings
@@ -866,7 +873,7 @@ msgstr "Aprovizionări automate"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_string_availability_info
 msgid "Availability"
-msgstr "Disponibil"
+msgstr "Disponibilitate"
 
 #. module: stock
 #: selection:stock.move,state:0 selection:stock.picking,state:0
@@ -1271,7 +1278,7 @@ msgstr "Calculează Stocul"
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_move_picking_form
 msgid "Conditions"
-msgstr "Conditii"
+msgstr "Condiții"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_config_settings
@@ -1883,7 +1890,7 @@ msgstr "Locația destinație"
 #: model:ir.model.fields,field_description:stock.field_stock_picking_location_dest_id
 #: model:ir.ui.view,arch_db:stock.view_stock_quant_form
 msgid "Destination Location Zone"
-msgstr ""
+msgstr "Locație destinație"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_procurement_order_move_dest_id
@@ -3431,7 +3438,7 @@ msgstr ""
 #. module: stock
 #: model:res.groups,name:stock.group_stock_multi_locations
 msgid "Manage multiple stock_locations"
-msgstr ""
+msgstr "Gestionare locații multiple de stoc"
 
 #. module: stock
 #: model:res.groups,name:stock.group_stock_multi_warehouses
@@ -4560,7 +4567,7 @@ msgstr "Grup de aprovizionare"
 #: model:ir.model.fields,field_description:stock.field_product_product_property_stock_procurement
 #: model:ir.model.fields,field_description:stock.field_product_template_property_stock_procurement
 msgid "Procurement Location"
-msgstr "Locație de aprovizionare"
+msgstr "Locație de aprovizionat"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.act_make_procurement
@@ -5139,12 +5146,12 @@ msgstr ""
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
 msgid "Reserve"
-msgstr "Rezerva"
+msgstr "Rezervă"
 
 #. module: stock
 #: selection:stock.config.settings,module_procurement_jit:0
 msgid "Reserve products immediately after the sale order confirmation"
-msgstr ""
+msgstr "Rezervă produse imediat după ce comanda de vânzare este confirmată."
 
 #. module: stock
 #: selection:stock.config.settings,module_procurement_jit:0
@@ -5599,7 +5606,7 @@ msgstr "Locația sursă"
 #: model:ir.model.fields,field_description:stock.field_stock_picking_location_id
 #: model:ir.ui.view,arch_db:stock.view_stock_quant_form
 msgid "Source Location Zone"
-msgstr "Zonă Locația sursă"
+msgstr "Locația sursă"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_pack_operation_package_id
@@ -6435,7 +6442,7 @@ msgstr "Transfer"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_picking_partner_id
 msgid "Transfer Destination Address"
-msgstr "Adresa de destinație "
+msgstr "Adresa de transfer"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_picking_id
@@ -6624,6 +6631,9 @@ msgid ""
 "                    trigger a draft purchase order, a manufacturing order or\n"
 "                    a new task."
 msgstr ""
+"Completați pentru a lansa o cerere de aprovizionare pentru acest produs. În "
+"funcție de configurarea produsului, aceasta ar putea declanșa o comanda de "
+"achiziție ciornă, o comandă de producție sau o sarcina nouă."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking_type_sequence

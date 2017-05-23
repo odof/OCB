@@ -1032,6 +1032,12 @@ msgid "A selected move line was already reconciled."
 msgstr "En valgt transaktions linie er allerede udlignet."
 
 #. module: account
+#: code:addons/account/models/account_bank_statement.py:883
+#, python-format
+msgid "A selected statement line was already reconciled with an account move."
+msgstr ""
+
+#. module: account
 #: code:addons/account/models/account_bank_statement.py:218
 #, python-format
 msgid "A statement cannot be canceled when its lines are reconciled."
@@ -1880,7 +1886,7 @@ msgstr "Analyse konto"
 #. module: account
 #: model:ir.ui.menu,name:account.account_analytic_tag_menu
 msgid "Analytic Accounts Tags"
-msgstr ""
+msgstr "Nøgleord for analytiske konti"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax_template_analytic
@@ -3057,7 +3063,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Congratulations, you're done!"
-msgstr ""
+msgstr "Tillykke, du er færdig!"
 
 #. module: account
 #: model:ir.model,name:account.model_account_abstract_payment
@@ -3111,7 +3117,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Create Customers"
-msgstr ""
+msgstr "Opret kunder"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_refund
@@ -3121,7 +3127,7 @@ msgstr "Opret kreditnota"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Create Vendors"
-msgstr ""
+msgstr "Opret leverandører"
 
 #. module: account
 #. openerp-web
@@ -3449,7 +3455,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_property_payment_term_id
 msgid "Customer Payment Terms"
-msgstr ""
+msgstr "Betingelser for kundebetaling"
 
 #. module: account
 #: selection:account.invoice,type:0 selection:account.invoice.report,type:0
@@ -3856,7 +3862,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Don't hesitate to"
-msgstr ""
+msgstr "Forhast ikke at"
 
 #. module: account
 #: selection:account.invoice.report,state:0
@@ -3866,7 +3872,7 @@ msgstr "Udført"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Download the"
-msgstr ""
+msgstr "Download"
 
 #. module: account
 #: selection:account.invoice,state:0 selection:account.invoice.report,state:0
@@ -4002,7 +4008,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "End"
-msgstr ""
+msgstr "Slut"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_aged_trial_balance_date_to
@@ -4096,7 +4102,7 @@ msgstr "Fejl!"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Excel template"
-msgstr ""
+msgstr "Excel skabelon"
 
 #. module: account
 #: code:addons/account/models/chart_template.py:185
@@ -4850,7 +4856,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "If you want to do it yourself:"
-msgstr ""
+msgstr "Hvis du selv vil gøre det:"
 
 #. module: account
 #: model:account.payment.term,name:account.account_payment_term_immediate
@@ -5816,7 +5822,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_account_last_time_entries_checked
 #: model:ir.model.fields,field_description:account.field_res_partner_last_time_entries_checked
 msgid "Latest Invoices & Payments Matching Date"
-msgstr ""
+msgstr "Seneste dato for match af faktura og betaling"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -6077,7 +6083,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_invoice_warn_msg
 msgid "Message for Invoice"
-msgstr ""
+msgstr "Besked tilhørende faktura"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_form
@@ -7705,7 +7711,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_register_payments
 msgid "Register payments on multiple invoices"
-msgstr ""
+msgstr "Registrer betaling på flere fakturaer"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8914,6 +8920,8 @@ msgid ""
 "The partner has at least one unreconciled debit and credit since last time "
 "the invoices & payments matching was performed."
 msgstr ""
+"Partneren har mindst en uafsluttet debet og kredit siden sidste gang "
+"fakturaer og betalinger blev matchet."
 
 #. module: account
 #: code:addons/account/models/account_move.py:853
@@ -9043,6 +9051,8 @@ msgid ""
 "This account will be used for invoices instead of the default one to value "
 "expenses for the current product."
 msgstr ""
+"Denne prisliste anvendes i stedet for standardprislisten ved salg til det "
+"aktuelle produkt."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_template_property_account_income_id
@@ -9050,6 +9060,8 @@ msgid ""
 "This account will be used for invoices instead of the default one to value "
 "sales for the current product."
 msgstr ""
+"Denne prisliste anvendes i stedet for standardprislisten ved bedømmelse af "
+"salg til det aktuelle produkt."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_category_property_account_expense_categ_id
@@ -9841,7 +9853,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_product_template_supplier_taxes_id
 msgid "Vendor Taxes"
-msgstr ""
+msgstr "Leverandør skatter"
 
 #. module: account
 #. openerp-web
@@ -9916,7 +9928,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Welcome"
-msgstr ""
+msgstr "Velkommen"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -10049,6 +10061,12 @@ msgstr ""
 #, python-format
 msgid "You can not delete a payment that is already posted"
 msgstr "Du kan ikke slette en betaling, der er bogført"
+
+#. module: account
+#: code:addons/account/models/account_invoice.py:1360
+#, python-format
+msgid "You can only delete an invoice line if the invoice is in draft state."
+msgstr ""
 
 #. module: account
 #: code:addons/account/models/account_payment.py:128

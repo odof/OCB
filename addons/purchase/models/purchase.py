@@ -509,6 +509,7 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _name = 'purchase.order.line'
     _description = 'Purchase Order Line'
+    _order = 'sequence, id'
 
     @api.depends('product_qty', 'price_unit', 'taxes_id')
     def _compute_amount(self):
@@ -580,6 +581,11 @@ class PurchaseOrderLine(models.Model):
                         msg += _("Billed Quantity") + ": %s <br/></li>" % (line.qty_invoiced,)
                     msg += "</ul>"
                     order.message_post(body=msg)
+        # Update expectged date of corresponding moves
+        if 'date_planned' in values:
+            self.env['stock.move'].search([
+                ('purchase_line_id', 'in', self.ids), ('state', '!=', 'done')
+            ]).write({'date_expected': values['date_planned']})
         result = super(PurchaseOrderLine, self).write(values)
         if orders:
             orders._create_picking()
@@ -987,7 +993,8 @@ class ProcurementOrder(models.Model):
         cache = {}
         res = []
         for procurement in self:
-            suppliers = procurement.product_id.seller_ids.filtered(lambda r: not r.product_id or r.product_id == procurement.product_id)
+            suppliers = procurement.product_id.seller_ids\
+                .filtered(lambda r: (not r.company_id or r.company_id == procurement.company_id) and (not r.product_id or r.product_id == procurement.product_id))
             if not suppliers:
                 procurement.message_post(body=_('No vendor associated to product %s. Please set one to fix this procurement.') % (procurement.product_id.name))
                 continue
