@@ -1358,7 +1358,9 @@ class Root(object):
         if db:
             if db not in db_filter([db], httprequest=httprequest):
                 _logger.warn("Logged into database '%s', but dbfilter "
-                             "rejects it; logging session out.", db)
+                             "rejects it; logging session out. "
+                             # Ajout OpenFire pour avoir le detail de l'url fautive
+                             "httprequest = %s", db, httprequest)
                 httprequest.session.logout()
                 db = None
 
