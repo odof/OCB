@@ -9,20 +9,22 @@
 # Kristoffer Grundström <kristoffer.grundstrom1983@gmail.com>, 2016
 # Patrik Lermon <patrik.lermon@gmail.com>, 2016
 # Daniel Forslund <daniel.forslund@gmail.com>, 2016
-# larmar <martin.wilderoth@linserv.se>, 2016
+# Martin Wilderoth <martin.wilderoth@linserv.se>, 2016
 # Haojun Zou <apollo_zhj@msn.com>, 2016
 # Leif Persson <leifpz54@gmail.com>, 2016
 # lasch a <bmail440@gmail.com>, 2016
 # Johan Bergquist <johan.bergquist@netip.se>, 2016
 # Zou Haojun <haojunzou84@gmail.com>, 2016
 # Jonathan S <jonathan.c.strom@gmail.com>, 2016
+# Kim Asplund <kim.asplund@gmail.com>, 2017
+# lynnliuying <lynn.liu1971@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-22 14:03+0000\n"
 "PO-Revision-Date: 2016-11-22 14:03+0000\n"
-"Last-Translator: Jonathan S <jonathan.c.strom@gmail.com>, 2016\n"
+"Last-Translator: lynnliuying <lynn.liu1971@gmail.com>, 2017\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -746,7 +748,7 @@ msgstr "Tillåter val och underhåll av flera enheter på produkt."
 #. module: stock
 #: selection:stock.config.settings,group_warning_stock:0
 msgid "An informative or blocking warning can be set on a partner"
-msgstr ""
+msgstr "En informativ eller blockerande varning kan ställas in på en partner"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_quant_package_ancestor_ids
@@ -1394,7 +1396,7 @@ msgstr "Skapa anskaffning"
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
 msgid "Create Vendors"
-msgstr ""
+msgstr "Skapa Leverantörer"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
@@ -3814,7 +3816,7 @@ msgstr ""
 #. module: stock
 #: selection:stock.config.settings,group_product_variant:0
 msgid "No variants on products"
-msgstr ""
+msgstr "Inga variationer av produkt"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_8
@@ -4056,7 +4058,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock.field_stock_move_ordered_qty
 #: model:ir.model.fields,field_description:stock.field_stock_pack_operation_ordered_qty
 msgid "Ordered Quantity"
-msgstr ""
+msgstr "Beställd Kvantitet"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_move_search
@@ -5007,7 +5009,7 @@ msgstr ""
 #: model:stock.picking.type,name:stock.picking_type_in
 #, python-format
 msgid "Receipts"
-msgstr ""
+msgstr "Mottagningar"
 
 #. module: stock
 #: selection:stock.warehouse,reception_steps:0
@@ -6678,7 +6680,7 @@ msgstr ""
 #: model:stock.location,name:stock.stock_location_suppliers
 #: selection:stock.picking.type,code:0
 msgid "Vendors"
-msgstr ""
+msgstr "leverantörer"
 
 #. module: stock
 #: selection:stock.move,priority:0 selection:stock.picking,priority:0
@@ -7011,7 +7013,13 @@ msgid "You cannot cancel a stock move that has been set to 'Done'."
 msgstr ""
 
 #. module: stock
-#: code:addons/stock/models/stock_inventory.py:352
+#: code:addons/stock/models/stock_scrap.py:72
+#, python-format
+msgid "You cannot delete a scrap which is done."
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_inventory.py:374
 #, python-format
 msgid ""
 "You cannot have two inventory adjustements in state 'in Progess' with the "
@@ -7040,6 +7048,12 @@ msgstr ""
 msgid ""
 "You cannot set a negative product quantity in an inventory line:\n"
 "\t%s - qty: %s"
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_production_lot.py:37
+#, python-format
+msgid "You are not allowed to create a lot for this picking type"
 msgstr ""
 
 #. module: stock

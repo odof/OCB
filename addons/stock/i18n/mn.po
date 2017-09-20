@@ -1738,7 +1738,7 @@ msgstr "Захиалагчид"
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DAF
 msgid "DELIVERED AT FRONTIER"
-msgstr ""
+msgstr "ХИЛ ДЭЭР НИЙЛҮҮЛСЭН"
 
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DAP
@@ -1763,12 +1763,12 @@ msgstr "ХҮРГЭЛТИЙН ТӨЛБӨР ТӨЛӨГДӨӨГҮЙ"
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DEQ
 msgid "DELIVERED EX QUAY"
-msgstr ""
+msgstr "ХӨЛӨГ ОНГОЦНЫ ЗОГСООЛ ДЭЭР НИЙЛҮҮЛСЭН"
 
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DES
 msgid "DELIVERED EX SHIP"
-msgstr ""
+msgstr "ХӨЛӨГ ОНГОЦОН ДЭЭР НИЙЛҮҮЛСЭН"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_config_settings_module_delivery_dhl
@@ -2331,7 +2331,7 @@ msgstr "FIFO, LIFO..."
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_FAS
 msgid "FREE ALONGSIDE SHIP"
-msgstr ""
+msgstr "ХӨЛӨГ ОНГОЦНЫ ХАШЛАГЫН ДАГУУ ЧӨЛӨӨТЭЙ"
 
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_FCA
@@ -2341,7 +2341,7 @@ msgstr "ҮНЭГҮЙ ТЭЭВЭРЛЭГЧ"
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_FOB
 msgid "FREE ON BOARD"
-msgstr ""
+msgstr "ТЭЭВЭРЛЭГЧ РҮҮ ХҮРГЭЛТ ҮНЭГҮЙ"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_config_settings_module_delivery_fedex
@@ -3248,7 +3248,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock.field_stock_inventory_filter
 #: model:ir.ui.view,arch_db:stock.view_inventory_form
 msgid "Inventory of"
-msgstr "Тооллого -аар"
+msgstr "Тооллогын сонголт"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location_return_location
@@ -7531,7 +7531,13 @@ msgid "You cannot cancel a stock move that has been set to 'Done'."
 msgstr "'Хийгдсэн' хөдөлгөөнийг цуцлах боломжгүй."
 
 #. module: stock
-#: code:addons/stock/models/stock_inventory.py:352
+#: code:addons/stock/models/stock_scrap.py:72
+#, python-format
+msgid "You cannot delete a scrap which is done."
+msgstr "Хийгдсэн хаягдлыг устгах боломжгүй."
+
+#. module: stock
+#: code:addons/stock/models/stock_inventory.py:374
 #, python-format
 msgid ""
 "You cannot have two inventory adjustements in state 'in Progess' with the "
@@ -7568,6 +7574,12 @@ msgid ""
 msgstr ""
 "Тооллогын мөрөнд барааны тоо хэмжээг сөрөгөөр тохируулах боломжгүй:\n"
 "\t%s - тоо.х: %s"
+
+#. module: stock
+#: code:addons/stock/models/stock_production_lot.py:37
+#, python-format
+msgid "You are not allowed to create a lot for this picking type"
+msgstr "Та энэ бэлтгэлийн төрөлд багц үүсгэх эрхгүй"
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:919
