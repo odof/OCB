@@ -508,7 +508,7 @@ exports.PosModel = Backbone.Model.extend({
                                     .then(function(){ load_model(index + 1); },
                                           function(err){ loaded.reject(err); });
                             }catch(err){
-                                console.error(err.stack);
+                                console.error(err.message, err.stack);
                                 loaded.reject(err);
                             }
                         },function(err){
@@ -725,10 +725,10 @@ exports.PosModel = Backbone.Model.extend({
                 // generate the pdf and download it
                 self.chrome.do_action('point_of_sale.pos_invoice_report',{additional_context:{ 
                     active_ids:order_server_id,
-                }});
-
-                invoiced.resolve();
-                done.resolve();
+                }}).done(function () {
+                    invoiced.resolve();
+                    done.resolve();
+                });
             });
 
             return done;
@@ -1943,6 +1943,8 @@ exports.Order = Backbone.Model.extend({
 
     initialize_validation_date: function () {
         this.validation_date = new Date();
+        this.formatted_validation_date = formats.format_value(
+            this.validation_date, {type: 'datetime'});
     },
 
     set_tip: function(tip) {
