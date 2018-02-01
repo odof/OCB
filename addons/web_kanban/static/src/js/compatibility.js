@@ -7,11 +7,13 @@ var KanbanColumn = require('web_kanban.Column');
 var KanbanView = require('web_kanban.KanbanView');
 
 return;
+/* Modification OpenFire :
+   Mise en commentaire de code jamais utilisé, provoquant un warning javascript
 openerp = window.openerp || {};
 openerp.web_kanban = openerp.web_kanban || {};
 openerp.web_kanban.AbstractField = kanban_widgets.AbstractField;
 openerp.web_kanban.KanbanGroup = KanbanColumn;
 openerp.web_kanban.KanbanRecord = KanbanRecord;
 openerp.web_kanban.KanbanView = KanbanView;
-
+Fin de modification OpenFire */
 });

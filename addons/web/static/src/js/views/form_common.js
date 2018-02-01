@@ -219,6 +219,8 @@ var CompletionFieldMixin = {
                 });
             }
             // quick create
+            /* Modification OpenFire :
+             * La fonction "créer" est inhibée pour éviter la création d'objet inutile
             var raw_result = _(_data.result).map(function(x) {return x[1];});
             if (search_val.length > 0 && !_.include(raw_result, search_val) &&
                 ! (self.options && (self.options.no_create || self.options.no_quick_create))) {
@@ -231,6 +233,8 @@ var CompletionFieldMixin = {
                     classname: 'o_m2o_dropdown_option'
                 });
             }
+            Fin de modification OpenFire*/
+            // Fin de la modification Openfire
             // create...
             if (!(self.options && (self.options.no_create || self.options.no_create_edit)) && self.can_create){
                 values.push({
