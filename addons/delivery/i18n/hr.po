@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-22 13:16+0000\n"
-"PO-Revision-Date: 2017-04-03 11:20+0000\n"
+"PO-Revision-Date: 2017-11-07 00:35+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Croatian (http://www.transifex.com/odoo/odoo-9/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -601,7 +601,7 @@ msgstr "Bruto težina"
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_search
 msgid "Group By"
-msgstr ""
+msgstr "Grupiraj po"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_id
@@ -839,7 +839,7 @@ msgstr "Naziv"
 #: code:addons/delivery/models/sale_order.py:62
 #, python-format
 msgid "No carrier matching."
-msgstr ""
+msgstr "Nema prijevoznika koji odgovara."
 
 #. module: delivery
 #: code:addons/delivery/models/sale_order.py:70
@@ -1334,7 +1334,7 @@ msgstr ""
 msgid ""
 "This field holds the image used as image for the product variant, limited to"
 " 1024x1024px."
-msgstr ""
+msgstr "Ovo polje sadrži sliku koja se koristi kao slika varijante proizvoda, ograničeno na 1024x1024px."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_price_extra
@@ -1436,7 +1436,7 @@ msgstr "Jedinica mjere"
 #: model:ir.model.fields,help:delivery.field_stock_move_weight_uom_id
 msgid ""
 "Unit of Measure (Unit of Measure) is the unit of measurement for Weight"
-msgstr ""
+msgstr "Jedinica mjere (Jedinica mjere) je jedinica mjerenja za težinu"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_uos_coeff
@@ -1451,7 +1451,7 @@ msgstr "Jedinica prodaje"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_stock_picking_weight_uom_id
 msgid "Unit of measurement for Weight"
-msgstr ""
+msgstr "Jedinica mjere za težinu"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_message_unread
@@ -1592,12 +1592,12 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_zip_from
 msgid "Zip From"
-msgstr ""
+msgstr "Polazni poštanski broj"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_zip_to
 msgid "Zip To"
-msgstr ""
+msgstr "Odredišni poštanski broj"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form

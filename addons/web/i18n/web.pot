@@ -1152,7 +1152,7 @@ msgstr ""
 #: code:addons/web/controllers/main.py:655
 #: code:addons/web/controllers/main.py:669
 #, python-format
-msgid "Invalid database name. Only alphanumerical characters and underscore are allowed."
+msgid "Invalid database name. Only alphanumerical characters, underscore, hyphen and dot are allowed."
 msgstr ""
 
 #. module: web

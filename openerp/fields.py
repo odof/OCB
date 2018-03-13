@@ -630,7 +630,8 @@ class Field(object):
 
             if field is self:
                 self.recursive = True
-                continue
+                if not i:
+                    continue            # self directly depends on self, give up
 
             # add trigger on field and its inverses to recompute self
             model._field_triggers.add(field, (self, '.'.join(path[:i] or ['id'])))
@@ -850,11 +851,11 @@ class Field(object):
             spec = self.modified_draft(record)
 
             # set value in cache, inverse field, and mark record as dirty
-            record._cache[self] = value
+            env.cache[self][record.id] = value
             if env.in_onchange:
                 for invf in record._field_inverses[self]:
                     invf._update(value, record)
-                record._set_dirty(self.name)
+                env.dirty[record].add(self.name)
 
             # determine more dependent fields, and invalidate them
             if self.relational:
@@ -866,7 +867,7 @@ class Field(object):
             record.write({self.name: self.convert_to_write(value)})
             # Update the cache unless value contains a new record
             if all(getattr(value, '_ids', ())):
-                record._cache[self] = value
+                env.cache[self][record.id] = value
 
     ############################################################################
     #
@@ -945,7 +946,7 @@ class Field(object):
     def determine_draft_value(self, record):
         """ Determine the value of ``self`` for the given draft ``record``. """
         if self.compute:
-            self._compute_value(record)
+            self.compute_value(record)
         else:
             record._cache[self] = SpecialValue(self.null(record.env))
 
