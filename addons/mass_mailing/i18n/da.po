@@ -3,7 +3,7 @@
 # * mass_mailing
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2016
 # Morten Schou <ms@msteknik.dk>, 2016
 # Sanne Kristensen <sanne@vkdata.dk>, 2016
@@ -78,6 +78,9 @@ msgid ""
 "                                        <span class=\"fa fa-compass fa-2x text-delta\"/>\n"
 "                                        &amp;nbsp;"
 msgstr ""
+"&amp;nbsp;\n"
+"                                        <span class=\"fa fa-compass fa-2x text-delta\"/>\n"
+"                                        &amp;nbsp;"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_steps
@@ -86,6 +89,9 @@ msgid ""
 "                                        <span class=\"fa fa-credit-card fa-2x text-delta\"/>\n"
 "                                        &amp;nbsp;"
 msgstr ""
+"&amp;nbsp;\n"
+"                                        <span class=\"fa fa-credit-card fa-2x text-delta\"/>\n"
+"                                        &amp;nbsp;"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_steps
@@ -94,6 +100,9 @@ msgid ""
 "                                        <span class=\"fa fa-smile-o fa-2x text-delta\"/>\n"
 "                                        &amp;nbsp;"
 msgstr ""
+"&amp;nbsp;\n"
+"                                        <span class=\"fa fa-smile-o fa-2x text-delta\"/>\n"
+"                                        &amp;nbsp;"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_discount1
@@ -103,7 +112,7 @@ msgstr "20%"
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_event
 msgid "21 Jul"
-msgstr ""
+msgstr "21 Jul"
 
 #. module: mass_mailing
 #: model:mail.template,body_html:mass_mailing.newsletter_template
@@ -130,12 +139,12 @@ msgstr "<i class=\"fa fa-angle-double-down\"/> Sidefødder"
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "<i class=\"fa fa-angle-double-up\"/> Headers"
-msgstr ""
+msgstr "<i class=\"fa fa-angle-double-up\"/> Sidehoveder"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "<i class=\"fa fa-clone\"/> Body"
-msgstr ""
+msgstr "<i class=\"fa fa-clone\"/> Beskrivelse"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.snippet_options
@@ -145,7 +154,7 @@ msgstr "<i class=\"fa fa-eyedropper\"/>Baggrundsfarve"
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "<i class=\"fa fa-plus\"/> Marketing Content"
-msgstr ""
+msgstr "<i class=\"fa fa-plus\"/> Marketing indhold"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_title_text
@@ -160,6 +169,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_discount2
 msgid "<small>CODE</small>:   <strong class=\"o_code h3\">45A9E77DGW8455</strong>"
 msgstr ""
+"<small>KODE</small>:   <strong class=\"o_code h3\">45A9E77DGW8455</strong>"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_steps
@@ -179,7 +189,7 @@ msgstr "<small>Trin 3:</small>"
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_comparison_table
 msgid "<small>user / month (billed annually)</small>"
-msgstr ""
+msgstr "<small>bruger / måned (faktureres årligt)</small>"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_footer_social
@@ -541,12 +551,12 @@ msgstr "Dato hvornår email har været åbnet første gang"
 #. module: mass_mailing
 #: model:ir.model.fields,help:mass_mailing.field_mail_mail_statistics_sent
 msgid "Date when the email has been sent"
-msgstr ""
+msgstr "Dato hvor emailen er blevet sendt"
 
 #. module: mass_mailing
 #: model:ir.model.fields,help:mass_mailing.field_mail_mail_statistics_replied
 msgid "Date when this email has been replied for the first time."
-msgstr ""
+msgstr "Dato hvor denne email første gang blev besvaret."
 
 #. module: mass_mailing
 #: model:ir.model.fields,help:mass_mailing.field_mail_mail_statistics_bounced
@@ -1159,7 +1169,7 @@ msgstr "Antal kontakter"
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mail_mass_mailing_campaign_clicks_ratio
 msgid "Number of clicks"
-msgstr ""
+msgstr "Antal klik"
 
 #. module: mass_mailing
 #: model:ir.ui.view,arch_db:mass_mailing.s_mail_block_discount1
