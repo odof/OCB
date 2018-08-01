@@ -137,9 +137,7 @@ class AccountMove(models.Model):
 
                          The journal entries are guaranteed to be in their original and inalterable state
                          From: %(start_move_name)s %(start_move_ref)s
-                         To: %(end_move_name)s %(end_move_ref)s
-
-                         For this report to be legally meaningful, please download your certification from your customer account on Odoo.com (Only for Odoo Enterprise users).'''
+                         To: %(end_move_name)s %(end_move_ref)s'''
                          ) % report_dict)
 
 
