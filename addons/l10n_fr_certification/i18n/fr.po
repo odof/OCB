@@ -19,13 +19,13 @@ msgstr ""
 #: code:addons/l10n_fr_certification/models/account.py:108
 #, python-format
 msgid "(ref.: %s)"
-msgstr ""
+msgstr "(réf. : %s)"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:79
 #, python-format
 msgid "According to the French law, you cannot modify a journal entry in order for its posted data to be updated or deleted. Unauthorized field: %s."
-msgstr ""
+msgstr "Conformément à la loi française, vous ne pouvez pas modifier une écriture comptable pour mettre à jour ou supprimer ses données validées. Champs non autorisés : %s."
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:165
@@ -33,18 +33,18 @@ msgstr ""
 #: code:addons/l10n_fr_certification/models/account.py:194
 #, python-format
 msgid "According to the French law, you cannot modify a journal in order for its posted data to be updated or deleted. Unauthorized field: %s."
-msgstr ""
+msgstr "Conformément à la loi française, vous ne pouvez pas modifier un journal pour mettre à jour ou supprimer ses données validées. Champs non autorisés : %s."
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:154
 #, python-format
 msgid "According to the French law, you cannot modify a journal item in order for its posted data to be updated or deleted. Unauthorized field: %s."
-msgstr ""
+msgstr "Conformément à la loi française, vous ne pouvez pas modifier une pièce comptable pour mettre à jour ou supprimer ses données validées. Champs non autorisés : %s."
 
 #. module: l10n_fr_certification
 #: model:ir.model,name:l10n_fr_certification.model_account_move
 msgid "Account Entry"
-msgstr ""
+msgstr "Écriture comptable"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:34
@@ -55,7 +55,7 @@ msgstr ""
 #. module: l10n_fr_certification
 #: model:ir.model,name:l10n_fr_certification.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:123
@@ -66,7 +66,7 @@ msgstr ""
 #. module: l10n_fr_certification
 #: model:ir.ui.view,arch_db:l10n_fr_certification.view_general_fr_inalterability_inherit_config
 msgid "Data Inalterability"
-msgstr ""
+msgstr "Donnée inaltérable"
 
 #. module: l10n_fr_certification
 #: model:ir.actions.server,name:l10n_fr_certification.action_check_hash_integrity
@@ -74,54 +74,54 @@ msgstr ""
 #: model:ir.ui.menu,name:l10n_fr_certification.menu_check_move_integrity_reporting
 #: model:ir.ui.view,arch_db:l10n_fr_certification.view_general_fr_inalterability_inherit_config
 msgid "Data Inalterability Check"
-msgstr ""
+msgstr "Vérification de l'inaltérabilité des données"
 
 #. module: l10n_fr_certification
 #: model:ir.ui.menu,name:l10n_fr_certification.inalterability_fr_statements_menu
 msgid "French Statements"
-msgstr ""
+msgstr "Déclarations françaises"
 
 #. module: l10n_fr_certification
 #: model:ir.actions.server,name:l10n_fr_certification.odoo_french_certification
 #: model:ir.ui.view,arch_db:l10n_fr_certification.view_general_fr_inalterability_inherit_config
 msgid "Get the certification now!"
-msgstr ""
+msgstr "Obtenir la certification maintenant"
 
 #. module: l10n_fr_certification
 #: model:ir.model.fields,field_description:l10n_fr_certification.field_account_move_l10n_fr_hash
 msgid "Inalterability Hash"
-msgstr ""
+msgstr "Hachage d'inaltérabilité"
 
 #. module: l10n_fr_certification
 #: model:ir.model.fields,field_description:l10n_fr_certification.field_account_move_l10n_fr_secure_sequence_number
 msgid "Inalteralbility No Gap Sequence #"
-msgstr ""
+msgstr "Inaltérabilité Pas d'écart de séquence #"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:175
 #, python-format
 msgid "It is not permitted to disable the data inalterability in this journal (%s) since journal entries have already been protected."
-msgstr ""
+msgstr "Il n'est pas permis de désactiver l'inaltérabilité des données pour ce journal (% s) car les écritures de ce journal ont déjà été protégées."
 
 #. module: l10n_fr_certification
 #: model:ir.model,name:l10n_fr_certification.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: l10n_fr_certification
 #: model:ir.model,name:l10n_fr_certification.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Élément du journal"
 
 #. module: l10n_fr_certification
 #: model:ir.model.fields,field_description:l10n_fr_certification.field_account_move_l10n_fr_string_to_hash
 msgid "L10n fr string to hash"
-msgstr ""
+msgstr "L10n fr chaîne à hacher"
 
 #. module: l10n_fr_certification
 #: model:ir.model.fields,field_description:l10n_fr_certification.field_res_company_l10n_fr_secure_sequence_id
 msgid "Sequence to use to ensure the securisation of data"
-msgstr ""
+msgstr "Séquence à utiliser pour s'assurer de l'inaltérabilité des données"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:136
@@ -130,26 +130,27 @@ msgid "Successful test !\n"
 "\n"
 "                         The journal entries are guaranteed to be in their original and inalterable state\n"
 "                         From: %(start_move_name)s %(start_move_ref)s\n"
-"                         To: %(end_move_name)s %(end_move_ref)s\n"
+"                         To: %(end_move_name)s %(end_move_ref)s"
+msgstr "Succès du test !\n"
 "\n"
-"                         For this report to be legally meaningful, please download your certification from your customer account on Odoo.com (Only for Odoo Enterprise users)."
-msgstr ""
+"                         Les éléments du journal sont garantis être dans leur état original et non altérés.\n"
+"                         De : %(start_move_name)s %(start_move_ref)s\n"
+"                         À : %(end_move_name)s %(end_move_ref)s"
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:118
 #, python-format
 msgid "There isn't any journal entry flagged for data inalterability yet for the company %s. This mechanism only runs for journal entries generated after the installation of the module France - Certification CGI 286 I-3 bis."
-msgstr ""
+msgstr "Il n'y a pas encore d'écriture de journal marquée pour l'inaltérabilité des données pour la société% s. Ce mécanisme ne fonctionne que pour les écritures de journal générées après l'installation du module France - Certification CGI 286 I-3 bis."
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:99
 #, python-format
 msgid "You cannot modify a posted journal entry. This ensures its inalterability."
-msgstr ""
+msgstr "Vous ne pouvez pas modifier un élément comptable validé. Cela assure son inaltérabilité."
 
 #. module: l10n_fr_certification
 #: code:addons/l10n_fr_certification/models/account.py:82
 #, python-format
 msgid "You cannot overwrite the values ensuring the inalterability of the accounting."
-msgstr ""
-
+msgstr "Vous ne pouvez pas modifier les données assurant l'inaltérabilité de la comptabilité."
