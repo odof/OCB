@@ -72,12 +72,12 @@ msgstr "Type de société"
 #. module: l10n_fr_fec
 #: selection:account.fr.fec,state:0
 msgid "Done"
-msgstr ""
+msgstr "Terminé"
 
 #. module: l10n_fr_fec
 #: selection:account.fr.fec,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Brouillon"
 
 #. module: l10n_fr_fec
 #: code:addons/l10n_fr_fec/wizard/fec.py:176
