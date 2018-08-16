@@ -1906,6 +1906,7 @@ msgstr "Vous permet d'utiliser la comptabilité analytique"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:266
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_amount
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_price_subtotal
+#: model:ir.model.fields,field_description:account.field_account_invoice_line_price_total
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax_amount
 #: model:ir.model.fields,field_description:account.field_account_move_amount
 #: model:ir.model.fields,field_description:account.field_account_partial_reconcile_amount
@@ -10126,6 +10127,16 @@ msgstr "Montant total dans la devise de la facture, néagatif pour les avoirs."
 #: model:ir.model.fields,help:account.field_res_users_credit
 msgid "Total amount this customer owes you."
 msgstr "Montant total que ce client vous doit."
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_invoice_line_price_total
+msgid "Total amount with taxes"
+msgstr "Montant total taxes incluses"
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_invoice_line_price_subtotal
+msgid "Total amount without taxes"
+msgstr "Montant total hors-taxe"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_partner_debit

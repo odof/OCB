@@ -1181,6 +1181,9 @@ class AccountInvoiceLine(models.Model):
         if self.invoice_line_tax_ids:
             taxes = self.invoice_line_tax_ids.compute_all(price, currency, self.quantity, product=self.product_id, partner=self.invoice_id.partner_id)
         self.price_subtotal = price_subtotal_signed = taxes['total_excluded'] if taxes else self.quantity * price
+        # OF Ajout OpenFire #
+        self.price_total = taxes['total_included'] if taxes else self.price_subtotal
+        #####################
         if self.invoice_id.currency_id and self.invoice_id.company_id and self.invoice_id.currency_id != self.invoice_id.company_id.currency_id:
             price_subtotal_signed = self.invoice_id.currency_id.with_context(date=self.invoice_id._get_currency_rate_date()).compute(price_subtotal_signed, self.invoice_id.company_id.currency_id)
         sign = self.invoice_id.type in ['in_refund', 'out_refund'] and -1 or 1
@@ -1210,8 +1213,12 @@ class AccountInvoiceLine(models.Model):
         default=_default_account,
         help="The income or expense account related to the selected product.")
     price_unit = fields.Float(string='Unit Price', required=True, digits=dp.get_precision('Product Price'))
+    # OF Modifications OpenFire #
     price_subtotal = fields.Monetary(string='Amount',
-        store=True, readonly=True, compute='_compute_price')
+        store=True, readonly=True, compute='_compute_price', help="Total amount without taxes")
+    price_total = fields.Monetary(string='Amount',
+        store=True, readonly=True, compute='_compute_price', help="Total amount with taxes")
+    #############################
     price_subtotal_signed = fields.Monetary(string='Amount Signed', currency_field='company_currency_id',
         store=True, readonly=True, compute='_compute_price',
         help="Total amount in the currency of the company, negative for credit notes.")

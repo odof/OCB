@@ -15,6 +15,9 @@
                         <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>
                         <th class="text-right">Taxes</th>
                         <th class="text-right" groups="sale.group_show_price_subtotal">Price</th>
+                        <!-- OF Début ajout OpenFire -->
+                        <th class="text-right price_tax_included" groups="sale.group_show_price_total">Total Price</th>
+                        <!-- OF Fin ajout OpenFire -->
                     </tr>
                 </thead>
                 <tbody class="invoice_tbody">
@@ -49,6 +52,12 @@
                                     <span t-field="l.price_subtotal"
                                         t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                 </td>
+                                <!-- OF Début ajout OpenFire -->
+                                <td class="text-right" groups="sale.group_show_price_total">
+                                    <span t-field="l.price_total"
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                                <!-- OF Fin ajout OpenFire -->
                             </tr>
                         </t>
 
