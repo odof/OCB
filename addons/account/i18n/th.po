@@ -643,7 +643,7 @@ msgstr "<strong>แสดงบัญชี</strong>"
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 msgid "<strong>Due Date:</strong>"
-msgstr ""
+msgstr "<strong>วันที่ครบกำหนด:</strong>"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_journal
@@ -726,7 +726,7 @@ msgstr "<strong>การซื้อ</strong>"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "<strong>Reconcile Bank Statement</strong>"
-msgstr ""
+msgstr "<strong>กระทบยอดรายการเดินบัญชีธนาคาร</strong>"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -738,7 +738,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "<strong>Reconcile your Bank Statements</strong>"
-msgstr ""
+msgstr "กระทบยอดรายการเดินบัญชีธนาคารของคุณ</strong>"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -750,7 +750,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "<strong>Record Bank Statement</strong>"
-msgstr ""
+msgstr "<strong>บันทึกรายการเดินบัญชีธนาคาร</strong>"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -799,7 +799,7 @@ msgstr "<strong>วันเริ่มตั้น:</strong>"
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_overdue_document
 msgid "<strong>Subtotal :</strong>"
-msgstr ""
+msgstr "<strong>ยอดรวม :</strong>"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_invoice_document
@@ -2106,7 +2106,7 @@ msgstr "เอกสารสรุป รายการเดินบัญ�
 #: code:addons/account/models/account_bank_statement.py:935
 #, python-format
 msgid "Bank Statement %s"
-msgstr ""
+msgstr "รายการเดินบัญชีธนาคาร %s"
 
 #. module: account
 #: model:ir.model,name:account.model_account_bank_statement_line
@@ -2116,7 +2116,7 @@ msgstr "รายการเดินในบัญชี"
 #. module: account
 #: model:ir.actions.act_window,name:account.action_bank_statement_line
 msgid "Bank Statement Lines"
-msgstr ""
+msgstr "บรรทัดรายการเดินบัญชีธนาคาร"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_bank_statement_tree
@@ -2148,7 +2148,7 @@ msgstr "ธนาคารและเงินสด"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_statement_line_id
 msgid "Bank statement line reconciled with this entry"
-msgstr ""
+msgstr "บรรทัดรายการเดินบัญชีธนาคารที่กระทบยอดกับเอนทรี่นี้"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_bank_statement
@@ -3964,7 +3964,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_balance_end_real
 msgid "Ending Balance"
-msgstr ""
+msgstr "ยอดเงินสิ้นสุด"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_cashbox_end_id
@@ -8909,7 +8909,7 @@ msgstr ""
 msgid ""
 "The selected unit of measure is not compatible with the unit of measure of "
 "the product."
-msgstr ""
+msgstr "หน่วยวัดที่เลือกไม่สามารถเข้ากันได้กับหน่วยวัดของสินค้า"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_tax_sequence
@@ -9428,7 +9428,7 @@ msgstr "ธุรกรรม"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_total_entry_encoding
 msgid "Transactions Subtotal"
-msgstr ""
+msgstr "ยอดรวมธุรกรรม"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_transfer_account_id
@@ -10407,7 +10407,7 @@ msgstr "วัน"
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "e.g. Bank Fees"
-msgstr ""
+msgstr "ตย. ค่าธรรมเนียมธนาคาร"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -10580,4 +10580,12 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 msgid "→ Count"
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account.py:309
+#, python-format
+msgid ""
+"Currency field should only be set if the journal's currency is different "
+"from the company's. Leave the field blank to use company currency."
 msgstr ""

@@ -7,14 +7,15 @@
 # Ladislav Tomm <tomm@helemik.cz>, 2016
 # Jaroslav Helemik Nemec <nemec@helemik.cz>, 2016
 # xlu <xlu@seznam.cz>, 2016
-# Jiří P., 2018
+# J. Podhorecky <j.podhorecky@volny.cz>, 2018
+# Michal Veselý <michal@veselyberanek.net>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
 "PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: Jiří P., 2018\n"
+"Last-Translator: Michal Veselý <michal@veselyberanek.net>, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +32,7 @@ msgstr "Kategorie produktu"
 #: model:ir.model.fields,field_description:product.field_product_product_product_variant_count
 #: model:ir.model.fields,field_description:product.field_product_template_product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "počet variant produktu"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_product_count
@@ -1087,7 +1088,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_fixed_price
 msgid "Fixed Price"
-msgstr ""
+msgstr "Pevná cena"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_min_quantity
@@ -1164,7 +1165,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_product_sequence
 #: model:ir.model.fields,help:product.field_product_template_sequence
 msgid "Gives the sequence order when displaying a product list"
-msgstr ""
+msgstr "Poskytuje pořadí při zobrazování seznamu produktů"
 
 #. module: product
 #: selection:product.pricelist.item,applied_on:0
@@ -1314,6 +1315,9 @@ msgid ""
 " It is automatically resized as a 1024x1024px image, with aspect ratio "
 "preserved."
 msgstr ""
+"Obrázek varianty produktu (obrázek šablony produktu ve velké velikosti, "
+"pokud je nepravdivý). Automaticky se změní velikost obrázku o velikosti "
+"1024x1024px a zachová se poměr stran."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image_medium
@@ -1328,6 +1332,8 @@ msgid ""
 "Image of the product variant (Small-sized image of product template if "
 "false)."
 msgstr ""
+"Obrázek varianty produktu (malý obrázek šablony produktu, pokud jiný není k "
+"dispozici)."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -1855,7 +1861,7 @@ msgstr "Ceníky jsou spravovány na"
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "Pricing"
-msgstr ""
+msgstr "Ceny"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_product_price_list
@@ -1896,7 +1902,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_price_value_id
 msgid "Product Attribute Value"
-msgstr ""
+msgstr "Hodnota atributu produktu"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_attribute_line_form
@@ -2862,7 +2868,7 @@ msgstr ""
 #. module: product
 #: model:ir.actions.act_window,name:product.product_supplierinfo_type_action
 msgid "Vendor Pricelists"
-msgstr ""
+msgstr "Ceníky dodavatele"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_product_code
