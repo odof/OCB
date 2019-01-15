@@ -28,6 +28,14 @@ class Company(models.Model):
         location.sudo().write({'company_id': self.id})
         self.write({'internal_transit_location_id': location.id})
 
+        # Début modification OpenFire
+        warehouses = self.env['stock.warehouse'].search([('partner_id', '=', self.partner_id.id)])
+        warehouses.mapped('partner_id').with_context(force_company=self.id).write({
+            'property_stock_customer': location.id,
+            'property_stock_supplier': location.id,
+        })
+        # Fin modification OpenFire
+
     @api.model
     def create(self, vals):
         company = super(Company, self).create(vals)
