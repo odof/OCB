@@ -1,5 +1,5 @@
--
-# Début modification OpenFire
+# Début modification OpenFire (inhibition de code)
+#-
 #  !python {model: res.partner, id: base.main_partner}: |
 #    main_warehouse = self.env['stock.warehouse'].browse(ref('warehouse0'))
 #    self.write({'property_stock_customer':main_warehouse.lot_stock_id.id})
