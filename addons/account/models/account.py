@@ -143,9 +143,19 @@ class AccountAccount(models.Model):
         args = args or []
         domain = []
         if name:
-            domain = ['|', ('code', '=ilike', name + '%'), ('name', operator, name)]
-            if operator in expression.NEGATIVE_TERM_OPERATORS:
-                domain = ['&', '!'] + domain[1:]
+            # OF Modification OpenFire
+            # Lorsque operator n'est pas de type *like, on garde sa fonction d'origine.
+            # Exemple : Odoo transformait un '=' en recherche par préfixe, ce qui fausse l'import standard de pièce comptable.
+            if 'like' in operator:
+                domain = ['|', ('code', '=ilike', name + '%'), ('name', operator, name)]
+                if operator in expression.NEGATIVE_TERM_OPERATORS:
+                    domain = ['&', '!'] + domain[1:]
+            else:
+                domain = ['|', ('code', operator, name), ('name', operator, name)]
+                if operator in expression.NEGATIVE_TERM_OPERATORS:
+                    domain[0] = '&'
+            # OF Fin modification OpenFire
+
         accounts = self.search(domain + args, limit=limit)
         return accounts.name_get()
 
