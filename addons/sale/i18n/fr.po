@@ -173,7 +173,7 @@ msgid ""
 "'_draft' or ''}"
 msgstr ""
 "${(object.name or '').replace('/','_')}${object.state == 'draft' and "
-"'_brouillon' or ''}"
+"'_devis' or ''}"
 
 #. module: sale
 #: model:mail.template,subject:sale.email_template_edi_sale
