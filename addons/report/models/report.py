@@ -68,9 +68,12 @@ else:
             wkhtmltopdf_state = 'upgrade'
         else:
             wkhtmltopdf_state = 'ok'
-        if LooseVersion(version) >= LooseVersion('0.12.2'):
-            wkhtmltopdf_dpi_zoom_ratio = True
-
+        # OF Modification OpenFire :
+        # Cette modification de Odoo sert à rendre les formats de papier compatibles avec wkhtmltopdf >= 0.12.2
+        # Nous utilisons déjà la version 0.12.4, cette modification a donc un impact non voulu sur nos documents
+#        if LooseVersion(version) >= LooseVersion('0.12.2'):
+#            wkhtmltopdf_dpi_zoom_ratio = True
+        # OF Fin modification OpenFire
         if config['workers'] == 1:
             _logger.info('You need to start Odoo with at least two workers to print a pdf version of the reports.')
             wkhtmltopdf_state = 'workers'
