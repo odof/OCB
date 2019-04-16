@@ -13,6 +13,9 @@ from odoo import _, api, fields, models
 from odoo import tools
 from odoo.addons.base.ir.ir_mail_server import MailDeliveryException
 from odoo.tools.safe_eval import safe_eval
+# DEBUT MODIFICATION OPENFIRE
+import re
+# FIN MODIFICATION OPENFIRE
 
 _logger = logging.getLogger(__name__)
 
@@ -247,7 +250,17 @@ class MailMail(models.Model):
                 headers = {}
                 bounce_alias = self.env['ir.config_parameter'].get_param("mail.bounce.alias")
                 catchall_domain = self.env['ir.config_parameter'].get_param("mail.catchall.domain")
-                if bounce_alias and catchall_domain:
+                # DEBUT MODIFICATION OPENFIRE
+                # Pour améliorer la délivrance des mails, on impose que le Return-Path de l'en-tête du mail soit le même que le mail du champ from
+                # si le paramètre système mail.bounce.alias vaut "from".
+                if bounce_alias == 'from' and mail.email_from:
+                    result = re.search(r'([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)', mail.email_from)
+                    if result:
+                        headers['Return-Path'] = result.group()
+                    else:
+                        raise MailDeliveryException(_(u"Mail Delivery Failed"), u"Adresse courriel expéditeur invalide")
+                elif bounce_alias and catchall_domain:
+                # FIN MODIFICATION OPENFIRE
                     if mail.model and mail.res_id:
                         headers['Return-Path'] = '%s+%d-%s-%d@%s' % (bounce_alias, mail.id, mail.model, mail.res_id, catchall_domain)
                     else:
