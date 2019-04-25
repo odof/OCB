@@ -84,7 +84,12 @@ class SaleAdvancePaymentInv(models.TransientModel):
             amount = self.amount
             name = _('Down Payment')
         del context
-        taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
+        # OF Modification OpenFire
+        # Utilisation d'une fonctions dans la société pour filtrer les taxes.
+        # Cela permet un héritage par notre module de multi-société
+        taxes = order.company_id._of_filter_taxes(self.product_id.taxes_id)
+        # taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
+        # OF Fin modification OpenFire
         if order.fiscal_position_id and taxes:
             tax_ids = order.fiscal_position_id.map_tax(taxes).ids
         else:
@@ -149,7 +154,12 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     raise UserError(_('The product used to invoice a down payment should have an invoice policy set to "Ordered quantities". Please update your deposit product to be able to create a deposit invoice.'))
                 if self.product_id.type != 'service':
                     raise UserError(_("The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."))
-                taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
+                # OF Modification OpenFire
+                # Utilisation d'une fonctions dans la société pour filtrer les taxes.
+                # Cela permet un héritage par notre module de multi-société
+                taxes = order.company_id._of_filter_taxes(self.product_id.taxes_id)
+                # taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
+                # OF Fin modification OpenFire
                 if order.fiscal_position_id and taxes:
                     tax_ids = order.fiscal_position_id.map_tax(taxes).ids
                 else:

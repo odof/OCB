@@ -1306,7 +1306,12 @@ class AccountInvoiceLine(models.Model):
 
         # Keep only taxes of the company
         company_id = self.company_id or self.env.user.company_id
-        taxes = taxes.filtered(lambda r: r.company_id == company_id)
+        # OF Modification OpenFire
+        # Utilisation d'une fonctions dans la société pour filtrer les taxes.
+        # Cela permet un héritage par notre module de multi-société
+        # taxes = taxes.filtered(lambda r: r.company_id == company_id)
+        taxes = company_id._of_filter_taxes(taxes)
+        # OF Fin modification OpenFire
 
         self.invoice_line_tax_ids = fp_taxes = self.invoice_id.fiscal_position_id.map_tax(taxes, self.product_id, self.invoice_id.partner_id)
 

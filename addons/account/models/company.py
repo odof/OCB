@@ -181,3 +181,13 @@ Best Regards,''')
                     raise UserError(_('You cannot change the currency of the company since some journal items already exist'))
 
         return super(ResCompany, self).write(values)
+
+    # OF Modification OpenFire
+    # Utilisation d'une fonctions dans la société pour filtrer les taxes.
+    # Cela permet un héritage par notre module de multi-société
+    @api.multi
+    def _of_filter_taxes(self, taxes):
+        if not self or not taxes:
+            return taxes
+        return taxes.filtered(lambda tax: tax.company_id == self)
+    # OF Fin modification OpenFire
