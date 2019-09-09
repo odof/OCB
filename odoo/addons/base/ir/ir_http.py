@@ -24,6 +24,12 @@ from odoo.exceptions import AccessDenied, AccessError
 from odoo.http import request, STATIC_CACHE, content_disposition
 from odoo.tools.mimetypes import guess_mimetype
 from odoo.modules.module import get_resource_path, get_module_path
+# DÉBUT MODIFICATION OPENFIRE
+# Génération de logs pour le débogage temps d'exécution
+import time
+of_pid = os.getpid() # Récupére le PID du processus
+of_id = 1
+# FIN MODIFICATION OPENFIRE
 
 _logger = logging.getLogger(__name__)
 
@@ -192,7 +198,26 @@ class IrHttp(models.AbstractModel):
         # set and execute handler
         try:
             request.set_handler(func, arguments, auth_method)
+            # DÉBUT MODIFICATION OPENFIRE
+            # Génération de logs pour le débogage temps d'exécution
+            global of_id
+            of_compteur = of_id
+            of_id += 1
+            of_debut = time.time()
+            of_base_url = request.httprequest.base_url
+            of_params = request.params
+            _logger.info(u"OF DEBOGUE DEBUT %s %s - appel %s %s", of_pid, of_compteur, of_base_url, of_params)
+            # FIN MODIFICATION OPENFIRE
             result = request.dispatch()
+            # DÉBUT MODIFICATION OPENFIRE
+            of_fin = time.time()
+            of_temps = of_fin - of_debut
+            if of_temps >= 10:
+                signe = '+'
+            else:
+                signe = '-'
+            _logger.info(u"OF DEBOGUE FIN" + signe + u" %s %s - Temps : %ss (début %s, fin %s) - appel %s %s", of_pid, of_compteur, of_temps, of_debut, of_fin, of_base_url, of_params)
+            # FIN MODIFICATION OPENFIRE
             if isinstance(result, Exception):
                 raise result
         except Exception, e:
