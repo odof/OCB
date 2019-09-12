@@ -201,22 +201,28 @@ class IrHttp(models.AbstractModel):
             # DÉBUT MODIFICATION OPENFIRE
             # Génération de logs pour le débogage temps d'exécution
             global of_id
-            of_compteur = of_id
-            of_id += 1
-            of_debut = time.time()
             of_base_url = request.httprequest.base_url
-            of_params = request.params
-            _logger.info(u"OF DEBOGUE DEBUT %s %s - appel %s %s", of_pid, of_compteur, of_base_url, of_params)
+            if of_base_url.find("/longpolling/poll") != -1:
+                longpolling = True
+            else:
+                longpolling = False
+                of_id += 1
+                of_compteur = of_id
+                of_debut = time.time()
+                of_params = request.params
+                if len(str(of_params)) > 4096:
+                    of_params = str(of_params)[:4096] + " [...]"
+                _logger.info(u"OF DEBOGUE DEBUT %s %s - appel %s", of_pid, of_compteur, of_base_url)
             # FIN MODIFICATION OPENFIRE
             result = request.dispatch()
             # DÉBUT MODIFICATION OPENFIRE
-            of_fin = time.time()
-            of_temps = of_fin - of_debut
-            if of_temps >= 10:
-                signe = '+'
-            else:
-                signe = '-'
-            _logger.info(u"OF DEBOGUE FIN" + signe + u" %s %s - Temps : %ss (début %s, fin %s) - appel %s %s", of_pid, of_compteur, of_temps, of_debut, of_fin, of_base_url, of_params)
+            if not longpolling:
+                of_temps = time.time() - of_debut
+                if of_temps >= 90:
+                    signe = 9
+                else:
+                    signe = int(of_temps / 10)
+                _logger.info(u"OF DEBOGUE FIN" + str(signe) + u" %s %s - Temps : %ss - appel %s %s", of_pid, of_compteur, of_temps, of_base_url, of_params)
             # FIN MODIFICATION OPENFIRE
             if isinstance(result, Exception):
                 raise result
