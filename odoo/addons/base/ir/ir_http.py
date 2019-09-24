@@ -222,7 +222,11 @@ class IrHttp(models.AbstractModel):
                     signe = 9
                 else:
                     signe = int(of_temps / 10)
-                _logger.info(u"OF DEBOGUE FIN" + str(signe) + u" %s %s - Temps : %ss - appel %s %s", of_pid, of_compteur, of_temps, of_base_url, of_params)
+                if signe == 0:
+                    # Opération rapide, on ne met pas les paramètres pour alléger les logs.
+                    _logger.info(u"OF DEBOGUE FIN" + str(signe) + u" %s %s - Temps : %ss - appel %s", of_pid, of_compteur, of_temps, of_base_url)
+                else:
+                    _logger.info(u"OF DEBOGUE FIN" + str(signe) + u" %s %s - Temps : %ss - appel %s %s", of_pid, of_compteur, of_temps, of_base_url, of_params)
             # FIN MODIFICATION OPENFIRE
             if isinstance(result, Exception):
                 raise result
