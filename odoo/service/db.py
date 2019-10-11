@@ -348,9 +348,17 @@ def list_dbs(force=False):
                 res = cr.fetchone()
                 db_user = res and str(res[0])
             if db_user:
-                cr.execute("select datname from pg_database where datdba=(select usesysid from pg_user where usename=%s) and not datistemplate and datallowconn and datname not in %s order by datname", (db_user, templates_list))
+                # DÉBUT MODIFICATION OPENFIRE
+                # Empêcher l'exécution des bases archive
+                #cr.execute("select datname from pg_database where datdba=(select usesysid from pg_user where usename=%s) and not datistemplate and datallowconn and datname not in %s order by datname", (db_user, templates_list))
+                cr.execute("select datname from pg_database where datdba=(select usesysid from pg_user where usename=%s) and not datistemplate and datallowconn and datname not like 'archive-%%' and datname not in %s order by datname", (db_user, templates_list))
+                # FIN MODIFICATION OPENFIRE
             else:
-                cr.execute("select datname from pg_database where not datistemplate and datallowconn and datname not in %s order by datname", (templates_list,))
+                # DÉBUT MODIFICATION OPENFIRE
+                # Empêcher l'exécution des bases archive
+                #cr.execute("select datname from pg_database where not datistemplate and datallowconn and datname not in %s order by datname", (templates_list,))
+                cr.execute("select datname from pg_database where not datistemplate and datallowconn and datname not like 'archive-%%' and datname not in %s order by datname", (templates_list,))
+                # FIN MODIFICATION OPENFIRE
             res = [odoo.tools.ustr(name) for (name,) in cr.fetchall()]
         except Exception:
             res = []
