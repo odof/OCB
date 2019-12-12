@@ -1845,7 +1845,7 @@ msgstr "Configuration de rapport"
 #. module: sale
 #: model:ir.ui.menu,name:sale.Report_configuration
 msgid "Report Layout Categories"
-msgstr "Rapport sur les catégories de mise en page"
+msgstr "Sections de devis"
 
 #. module: sale
 #: model:ir.ui.view,arch_db:sale.view_order_form
