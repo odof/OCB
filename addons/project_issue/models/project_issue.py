@@ -44,7 +44,7 @@ class ProjectIssue(models.Model):
     channel = fields.Char(string='Channel', help="Communication channel.")  # TDE note: is it still used somewhere ?
     tag_ids = fields.Many2many('project.tags', string='Tags')
     priority = fields.Selection([('0', 'Low'), ('1', 'Normal'), ('2', 'High')], 'Priority', index=True, default='0')
-    stage_id = fields.Many2one('project.task.type', string='Stage', track_visibility='onchange', index=True,
+    stage_id = fields.Many2one('project.task.type', string='Stage', ondelete='restrict', track_visibility='onchange', index=True,
                                domain="[('project_ids', '=', project_id)]", copy=False,
                                group_expand='_read_group_stage_ids',
                                default=_get_default_stage_id)
