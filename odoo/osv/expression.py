@@ -1001,10 +1001,10 @@ class expression(object):
                             if res_ids:
                                 operator = 'not in' if operator in NEGATIVE_TERM_OPERATORS else 'in'
                         else:
-                            if not isinstance(right, list):
-                                res_ids = [right]
-                            else:
+                            if isinstance(right, collections.Iterable):
                                 res_ids = right
+                            else:
+                                res_ids = [right]
                         if not res_ids:
                             if operator in ['like', 'ilike', 'in', '=']:
                                 #no result found with given search criteria
