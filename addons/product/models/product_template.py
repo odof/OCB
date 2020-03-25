@@ -246,6 +246,7 @@ class ProductTemplate(models.Model):
 
     @api.one
     def _set_default_code(self):
+        self = self.with_context(active_test=False)
         if len(self.product_variant_ids) == 1:
             self.product_variant_ids.default_code = self.default_code
 
