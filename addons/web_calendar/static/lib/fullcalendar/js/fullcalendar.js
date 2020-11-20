@@ -4332,10 +4332,18 @@ function AgendaEventRenderer() {
 /* Agenda Event Segment Utilities
 -----------------------------------------------------------------------------*/
 
+// OF Modification OpenFire
+function orderSegByAttendee(segs) {
+    return _.sortBy(segs, function(seg){return seg.event.attendees[0]});
+}
+// OF Fin Modification OpenFire
 
 // Sets the seg.backwardCoord and seg.forwardCoord on each segment and returns a new
 // list in the order they should be placed into the DOM (an implicit z-index).
 function placeSlotSegs(segs) {
+    // OF Modification OpenFire
+    segs = orderSegByAttendee(segs);
+    // OF Fin Modification OpenFire
 	var levels = buildSlotSegLevels(segs);
 	var level0 = levels[0];
 	var i;
