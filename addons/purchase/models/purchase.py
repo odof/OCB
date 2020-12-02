@@ -976,7 +976,13 @@ class ProcurementOrder(models.Model):
         fpos = po.fiscal_position_id
         taxes_id = fpos.map_tax(taxes) if fpos else taxes
         if taxes_id:
-            taxes_id = taxes_id.filtered(lambda x: x.company_id.id == self.company_id.id)
+            # OF Modification OpenFire
+            # Utilisation d'une fonction dans la société pour filtrer les taxes.
+            # Cela permet un héritage par notre module de multi-société.
+            taxes_id = self.company_id._of_filter_taxes(taxes_id)
+            # taxes_id = taxes_id.filtered(lambda x: x.company_id.id == self.company_id.id)
+            # OF Fin modification OpenFire
+
 
         price_unit = self.env['account.tax']._fix_tax_included_price_company(seller.price, self.product_id.supplier_taxes_id, taxes_id, self.company_id) if seller else 0.0
         if price_unit and seller and po.currency_id and seller.currency_id != po.currency_id:

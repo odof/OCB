@@ -85,8 +85,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             name = _('Down Payment')
         del context
         # OF Modification OpenFire
-        # Utilisation d'une fonctions dans la société pour filtrer les taxes.
-        # Cela permet un héritage par notre module de multi-société
+        # Utilisation d'une fonction dans la société pour filtrer les taxes.
+        # Cela permet un héritage par notre module de multi-société.
         taxes = order.company_id._of_filter_taxes(self.product_id.taxes_id)
         # taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
         # OF Fin modification OpenFire
@@ -155,8 +155,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 if self.product_id.type != 'service':
                     raise UserError(_("The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."))
                 # OF Modification OpenFire
-                # Utilisation d'une fonctions dans la société pour filtrer les taxes.
-                # Cela permet un héritage par notre module de multi-société
+                # Utilisation d'une fonction dans la société pour filtrer les taxes.
+                # Cela permet un héritage par notre module de multi-société.
                 taxes = order.company_id._of_filter_taxes(self.product_id.taxes_id)
                 # taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
                 # OF Fin modification OpenFire

@@ -183,8 +183,8 @@ Best Regards,''')
         return super(ResCompany, self).write(values)
 
     # OF Modification OpenFire
-    # Utilisation d'une fonctions dans la société pour filtrer les taxes.
-    # Cela permet un héritage par notre module de multi-société
+    # Utilisation d'une fonction dans la société pour filtrer les taxes.
+    # Cela permet un héritage par notre module de multi-société.
     @api.multi
     def _of_filter_taxes(self, taxes):
         if not self or not taxes:

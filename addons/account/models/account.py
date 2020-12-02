@@ -858,8 +858,14 @@ class AccountTax(models.Model):
     def _fix_tax_included_price_company(self, price, prod_taxes, line_taxes, company_id):
         if company_id:
             #To keep the same behavior as in _compute_tax_id
-            prod_taxes = prod_taxes.filtered(lambda tax: tax.company_id == company_id)
-            line_taxes = line_taxes.filtered(lambda tax: tax.company_id == company_id)
+            # OF Modification OpenFire
+            # Utilisation d'une fonction dans la société pour filtrer les taxes.
+            # Cela permet un héritage par notre module de multi-société.
+            prod_taxes = company_id._of_filter_taxes(prod_taxes)
+            line_taxes = company_id._of_filter_taxes(line_taxes)
+            # prod_taxes = prod_taxes.filtered(lambda tax: tax.company_id == company_id)
+            # line_taxes = line_taxes.filtered(lambda tax: tax.company_id == company_id)
+            # OF Fin modification OpenFire
         return self._fix_tax_included_price(price, prod_taxes, line_taxes)
 
 class AccountReconcileModel(models.Model):

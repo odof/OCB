@@ -631,8 +631,8 @@ class SaleOrderLine(models.Model):
             fpos = line.order_id.fiscal_position_id or line.order_id.partner_id.property_account_position_id
             # If company_id is set, always filter taxes by the company
             # OF Modification OpenFire
-            # Utilisation d'une fonctions dans la société pour filtrer les taxes.
-            # Cela permet un héritage par notre module de multi-société
+            # Utilisation d'une fonction dans la société pour filtrer les taxes.
+            # Cela permet un héritage par notre module de multi-société.
             taxes = line.company_id._of_filter_taxes(line.product_id.taxes_id)
             # taxes = line.product_id.taxes_id.filtered(lambda r: not line.company_id or r.company_id == line.company_id)
             # OF Fin modification OpenFire
