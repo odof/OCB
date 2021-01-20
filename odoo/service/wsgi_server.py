@@ -19,6 +19,7 @@ import socket
 import sys
 import threading
 import traceback
+import re
 
 import werkzeug.serving
 import werkzeug.contrib.fixers
@@ -148,6 +149,25 @@ def wsgi_xmlrpc(environ, start_response):
             string_faultcode = False
         else:
             service = environ['PATH_INFO'][len('/xmlrpc/'):]
+        # # -- Modifications OpenFire
+        if environ['PATH_INFO'] == '/xmlrpc/db':
+            # Ne pas renvoyer la liste des db comme prévu à l'origine mais utiliser of_url_dbfilter
+            HOST = environ.get('HTTP_HOST', "")
+            h = HOST.split(':')[0]
+            d, _, r = h.partition('.')
+            if d == "www" and r:
+                d = r.partition('.')[0]
+            dbs = odoo.service.db.list_dbs(force=True)
+            # Modification OpenFire pour modifier le db_filter en fonction de l'url de connexion
+            dbfilter = eval(odoo.tools.config.get('of_url_dbfilter', "{}")).get(h, odoo.tools.config['dbfilter'])
+            d, h = re.escape(d), re.escape(h)
+            r = dbfilter.replace('%h', h).replace('%d', d)
+            dbs = [i for i in dbs if re.match(r, i)]
+            if len(dbs) == 1:
+                response = xmlrpclib.dumps((dbs,), methodresponse=1, allow_none=False, encoding=None)
+                start_response("200 OK", [('Content-Type', 'text/xml'), ('Content-Length', str(len(response)))])
+                return [response]
+        #  -- Fin modifications OpenFire
 
         params, method = xmlrpclib.loads(data)
         return xmlrpc_return(start_response, service, method, params, string_faultcode)
@@ -158,7 +178,7 @@ def application_unproxied(environ, start_response):
     # web.session.OpenERPSession.send() and at RPC dispatch in
     # odoo.service.web_services.objects_proxy.dispatch().
     # /!\ The cleanup cannot be done at the end of this `application`
-    # method because werkzeug still produces relevant logging afterwards 
+    # method because werkzeug still produces relevant logging afterwards
     if hasattr(threading.current_thread(), 'uid'):
         del threading.current_thread().uid
     if hasattr(threading.current_thread(), 'dbname'):
