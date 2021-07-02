@@ -1,5 +1,5 @@
 <odoo>
-    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Payment Stripe SCA Assets" priority="999">
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Payment Stripe SCA Assets" priority="999">
         <xpath expr="." position="inside">
             <!-- DBO NOTE: the following conditions are there to avoid 2 link modules that would contain
             a single JS file and assets inclusion. It's a bit ugly, but should be fine functionnaly.-->
