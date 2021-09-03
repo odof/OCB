@@ -268,7 +268,9 @@ function getItem(key, defaultValue) {
 }
 
 function setItem(key, value) {
-    local_storage.setItem(key, JSON.stringify(value));
+    try {
+        local_storage.setItem(key, JSON.stringify(value));
+    } catch (exception) {}
 }
 
 var tab_manager = {
@@ -343,7 +345,7 @@ var tab_manager = {
                 tab_manager.is_no_longer_master();
             } else {
                 tab_manager.last_heartbeat = current;
-                local_storage.setItem(tab_manager.heartbeatKey, current);
+                setItem(tab_manager.heartbeatKey, current);
                 setItem(tab_manager.peersKey, cleanedPeers);
             }
         } else {
