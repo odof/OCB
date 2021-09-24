@@ -435,7 +435,13 @@ actual arch.
            :rtype: list of tuples
            :return: [(view_arch,view_id), ...]
         """
+        # OF Début modification Openfire
+        # Correction de la gestion du mode débug dans les vues
+        from odoo.http import request
         user_groups = self.env.user.groups_id
+        if not (request and request.debug):
+            user_groups = user_groups - self.env.ref('base.group_no_one')
+        # OF Fin modification OpenFire
         conditions = self._get_inheriting_views_arch_domain(view_id, model)
 
         if self.pool._init and not self._context.get('load_all_views'):
