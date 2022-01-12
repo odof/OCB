@@ -261,6 +261,10 @@ class ProductTemplate(models.Model):
         if self.uom_id:
             self.uom_po_id = self.uom_id.id
 
+    def _get_related_fields_variant_template(self):
+        """ Return a list of fields present on template and variants models and that are related"""
+        return ['barcode', 'default_code', 'standard_price', 'volume', 'weight']
+
     @api.model
     def create(self, vals):
         ''' Store the initial standard price in order to be able to retrieve the cost of a product template for a given date'''
@@ -272,16 +276,9 @@ class ProductTemplate(models.Model):
 
         # This is needed to set given values to first variant after creation
         related_vals = {}
-        if vals.get('barcode'):
-            related_vals['barcode'] = vals['barcode']
-        if vals.get('default_code'):
-            related_vals['default_code'] = vals['default_code']
-        if vals.get('standard_price'):
-            related_vals['standard_price'] = vals['standard_price']
-        if vals.get('volume'):
-            related_vals['volume'] = vals['volume']
-        if vals.get('weight'):
-            related_vals['weight'] = vals['weight']
+        for field_name in self._get_related_fields_variant_template():
+            if vals.get(field_name):
+                related_vals[field_name] = vals[field_name]
         if related_vals:
             template.write(related_vals)
         return template
