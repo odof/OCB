@@ -147,7 +147,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
             sale_line_obj = self.env['sale.order.line']
             for order in sale_orders:
                 if self.advance_payment_method == 'percentage':
-                    amount = order.amount_untaxed * self.amount / 100
+                    # OF Modification OpenFire
+                    amount = round(order.amount_untaxed * self.amount / 100, 2)
+                    # OF Fin modification OpenFire
                 else:
                     amount = self.amount
                 if self.product_id.invoice_policy != 'order':
