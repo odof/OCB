@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ConfigParser
+import glob
 import optparse
 import os
 import sys
@@ -449,8 +450,9 @@ class configmanager(object):
             self.options['addons_path'] = ','.join(default_addons)
         else:
             self.options['addons_path'] = ",".join(
-                    os.path.abspath(os.path.expanduser(os.path.expandvars(x.strip())))
-                      for x in self.options['addons_path'].split(','))
+                os.path.abspath(os.path.expanduser(os.path.expandvars(y)))
+                for x in self.options['addons_path'].split(',')
+                for y in glob.glob(x.strip()))
 
         self.options['data_dir'] = os.path.abspath(os.path.expanduser(os.path.expandvars(self.options['data_dir'].strip())))
 
