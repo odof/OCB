@@ -440,7 +440,9 @@ actual arch.
         from odoo.http import request
         user_groups = self.env.user.groups_id
         if not (request and request.debug):
-            user_groups = user_groups - self.env.ref('base.group_no_one')
+            debug_group = self.env.ref('base.group_no_one', raise_if_not_found=False)
+            if debug_group:
+                user_groups = user_groups - debug_group
         # OF Fin modification OpenFire
         conditions = self._get_inheriting_views_arch_domain(view_id, model)
 
