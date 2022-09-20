@@ -416,51 +416,88 @@ class StockMove(models.Model):
         if self.date_expected:
             self.date = self.date_expected
 
-    # TDE DECORATOR: remove that api.multi when action_confirm is migrated
-    @api.multi
+    # OF Modification OpenFire
+    def _key_assign_picking(self):
+        self.ensure_one()
+        return self.group_id, self.location_id, self.location_dest_id, self.picking_type_id
+
+    def _search_picking_for_assignation(self):
+        self.ensure_one()
+        picking = self.env['stock.picking'].search([
+                ('group_id', '=', self.group_id.id),
+                ('location_id', '=', self.location_id.id),
+                ('location_dest_id', '=', self.location_dest_id.id),
+                ('picking_type_id', '=', self.picking_type_id.id),
+                ('printed', '=', False),
+                ('state', 'in', ['draft', 'confirmed', 'waiting', 'partially_available', 'assigned'])], limit=1)
+        return picking
+
     def assign_picking(self):
         """ Try to assign the moves to an existing picking that has not been
         reserved yet and has the same procurement group, locations and picking
         type (moves should already have them identical). Otherwise, create a new
         picking to assign them to. """
         Picking = self.env['stock.picking']
+        grouped_moves = {}
         for move in self:
-            recompute = False
-            picking = Picking.search([
-                ('group_id', '=', move.group_id.id),
-                ('location_id', '=', move.location_id.id),
-                ('location_dest_id', '=', move.location_dest_id.id),
-                ('picking_type_id', '=', move.picking_type_id.id),
-                ('printed', '=', False),
-                ('state', 'in', ['draft', 'confirmed', 'waiting', 'partially_available', 'assigned'])], limit=1)
-            if not picking:
-                recompute = True
-                picking = Picking.create(move._get_new_picking_values())
-            move.write({'picking_id': picking.id})
+            key = move._key_assign_picking()
+            if key in grouped_moves:
+                grouped_moves[key] += move
+            else:
+                grouped_moves[key] = move
+        for group, moves in grouped_moves.iteritems():
+            new_picking = False
+            # Could pass the arguments contained in group but they are the same
+            # for each move that why moves[0] is acceptable
+            picking = moves[0]._search_picking_for_assignation()
+            if picking:
+                # If a picking is found, we'll append `move` to its move list and thus its
+                # `partner_id` and `ref` field will refer to multiple records. In this
+                # case, we chose to wipe them.
+                vals = {}
+                if any(picking.partner_id.id != m.partner_id.id for m in moves):
+                    vals['partner_id'] = False
+                if any(picking.origin != m.origin for m in moves):
+                    vals['origin'] = False
+                if vals:
+                    picking.write(vals)
+            else:
+                new_picking = True
+                picking = Picking.create(moves._get_new_picking_values())
 
-            # If this method is called in batch by a write on a one2many and
-            # at some point had to create a picking, some next iterations could
-            # try to find back the created picking. As we look for it by searching
-            # on some computed fields, we have to force a recompute, else the
-            # record won't be found.
-            if recompute:
-                move.recompute()
+            moves.write({'picking_id': picking.id})
+            moves._assign_picking_post_process(new=new_picking)
         return True
-    _picking_assign = assign_picking
+
+    def _assign_picking_post_process(self, new=False):
+        pass
 
     def _get_new_picking_values(self):
-        """ Prepares a new picking for this move as it could not be assigned to
-        another picking. This method is designed to be inherited. """
+        """ return create values for new picking that will be linked with group
+        of moves in self.
+        """
+        origins = self.filtered(lambda m: m.origin).mapped('origin')
+        origins = list(dict.fromkeys(origins))  # create a list of unique items
+        # Will display source document if any, when multiple different origins
+        # are found display a maximum of 5
+        if len(origins) == 0:
+            origin = False
+        else:
+            origin = ','.join(origins[:5])
+            if len(origins) > 5:
+                origin += "..."
+        partners = self.mapped('partner_id')
+        partner = len(partners) == 1 and partners.id or False
         return {
-            'origin': self.origin,
-            'company_id': self.company_id.id,
-            'move_type': self.group_id and self.group_id.move_type or 'direct',
-            'partner_id': self.partner_id.id,
-            'picking_type_id': self.picking_type_id.id,
-            'location_id': self.location_id.id,
-            'location_dest_id': self.location_dest_id.id,
+            'origin': origin,
+            'company_id': self.mapped('company_id').id,
+            'move_type': self.mapped('group_id').move_type or 'direct',
+            'partner_id': partner,
+            'picking_type_id': self.mapped('picking_type_id').id,
+            'location_id': self.mapped('location_id').id,
+            'location_dest_id': self.mapped('location_dest_id').id,
         }
-    _prepare_picking_assign = _get_new_picking_values
+    # OF Fin modification OpenFire
 
     @api.multi
     def action_confirm(self):
