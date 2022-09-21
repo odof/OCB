@@ -661,6 +661,10 @@ class SaleOrderLine(models.Model):
         """
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         new_procs = self.env['procurement.order']  # Empty recordset
+        # OF Modification OpenFire
+        proc_create_obj = self.env["procurement.order"].with_context(procurement_autorun_defer=True)
+        new_procs_data = {}
+        # OF Fin modification OpenFire
         for line in self:
             if line.state != 'sale' or not line.product_id._need_procurement():
                 continue
@@ -676,11 +680,19 @@ class SaleOrderLine(models.Model):
 
             vals = line._prepare_order_line_procurement(group_id=line.order_id.procurement_group_id.id)
             vals['product_qty'] = line.product_uom_qty - qty
-            new_proc = self.env["procurement.order"].with_context(procurement_autorun_defer=True).create(vals)
-            new_proc.message_post_with_view('mail.message_origin_link',
-                values={'self': new_proc, 'origin': line.order_id},
-                subtype_id=self.env.ref('mail.mt_note').id)
-            new_procs += new_proc
+            # OF Modification OpenFire
+            # La création et l'envoi de message vident le cache, on les regroupe ensemble
+            new_procs_data.setdefault(line.order_id, []).append(vals)
+        mail_subtype_id = self.env.ref('mail.mt_note').id
+        for order, vals_list in new_procs_data.iteritems():
+            for vals in vals_list:
+                new_proc = proc_create_obj.create(vals)
+                new_proc.message_post_with_view(
+                    'mail.message_origin_link',
+                    values={'self': new_proc, 'origin': order},
+                    subtype_id=mail_subtype_id)
+                new_procs += new_proc
+        # OF Fin modification OpenFire
         new_procs.run()
         return new_procs
 
