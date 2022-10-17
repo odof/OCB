@@ -1758,6 +1758,11 @@ core.form_widget_registry
 core.one2many_view_registry
     .add('list', One2ManyListView);
 
+// OPENFIRE début de modification OF
+core.view_registry
+    .add('many2many_list', Many2ManyListView);
+// OPENFIRE fin de modification OF
+
 return {
     FieldMany2ManyTags: FieldMany2ManyTags,
     AbstractManyField: AbstractManyField,
