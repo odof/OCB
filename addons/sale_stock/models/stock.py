@@ -27,18 +27,19 @@ class StockMove(models.Model):
             line.qty_delivered = line._get_delivered_qty()
         return result
 
-    @api.multi
-    def assign_picking(self):
-        result = super(StockMove, self).assign_picking()
-        for move in self:
-            if move.picking_id and move.picking_id.group_id:
-                picking = move.picking_id
-                order = self.env['sale.order'].sudo().search([('procurement_group_id', '=', picking.group_id.id)])
+    # OF Modification OpenFire
+    def _assign_picking_post_process(self, new=False):
+        super(StockMove, self)._assign_picking_post_process(new=new)
+        if new:
+            picking = self.mapped('picking_id')
+            sale_orders = self.env['sale.order'].sudo().search(
+                [('procurement_group_id', '=', picking.group_id.id)])
+            for order in sale_orders:
                 picking.message_post_with_view(
                     'mail.message_origin_link',
                     values={'self': picking, 'origin': order},
                     subtype_id=self.env.ref('mail.mt_note').id)
-        return result
+    # OF Fin modification OpenFire
 
     def _prepare_move_split_vals(self, defaults):
         defaults = super(StockMove, self)._prepare_move_split_vals(defaults)

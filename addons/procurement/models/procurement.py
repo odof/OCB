@@ -177,6 +177,9 @@ class ProcurementOrder(models.Model):
             # we intentionnaly do the browse under the for loop to avoid caching all ids which would be resource greedy
             # and useless as we'll make a refresh later that will invalidate all the cache (and thus the next iteration
             # will fetch all the ids again)
+            # OF Modification OpenFire
+            procurement = procurement.with_prefetch()
+            # OF Fin Modification OpenFire
             if procurement.state not in ("running", "done"):
                 try:
                     if procurement._assign():
