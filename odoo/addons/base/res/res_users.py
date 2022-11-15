@@ -692,15 +692,24 @@ class UsersImplied(models.Model):
             values['groups_id'] = type(self).groups_id.convert_to_write(gs, user.groups_id)
         return super(UsersImplied, self).create(values)
 
-    @api.multi
     def write(self, values):
+        if not values.get('groups_id'):
+            return super(UsersImplied, self).write(values)
+        users_before = self.filtered(lambda u: u.has_group('base.group_user'))
         res = super(UsersImplied, self).write(values)
-        if values.get('groups_id'):
-            # add implied groups for all users
-            for user in self.with_context({}):
-                gs = set(concat(g.trans_implied_ids for g in user.groups_id))
-                vals = {'groups_id': [(4, g.id) for g in gs]}
-                super(UsersImplied, user).write(vals)
+        demoted_users = users_before.filtered(lambda u: not u.has_group('base.group_user'))
+        if demoted_users:
+            # demoted users are restricted to the assigned groups only
+            vals = {'groups_id': [(5, 0, 0)] + values['groups_id']}
+            super(UsersImplied, demoted_users).write(vals)
+        # add implied groups for all users (in batches)
+        users_batch = defaultdict(self.browse)
+        for user in self:
+            users_batch[user.groups_id] += user
+        for groups, users in users_batch.items():
+            gs = set(concat(g.trans_implied_ids for g in groups))
+            vals = {'groups_id': [(4, g.id) for g in gs]}
+            super(UsersImplied, users).write(vals)
         return res
 
 #
