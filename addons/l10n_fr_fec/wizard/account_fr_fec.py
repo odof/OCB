@@ -68,6 +68,8 @@ class AccountFrFec(models.TransientModel):
             AND am.state = 'posted'
             '''
         company = self.env.user.company_id
+        while not company.chart_template_id and company.parent_id:
+            company = company.parent_id
         formatted_date_from = self.date_from.replace('-', '')
         date_from = datetime.strptime(self.date_from, DEFAULT_SERVER_DATE_FORMAT)
         formatted_date_year = date_from.year
@@ -111,6 +113,8 @@ class AccountFrFec(models.TransientModel):
             ]
 
         company = self.env.user.company_id
+        while not company.chart_template_id and company.parent_id:
+            company = company.parent_id
         if not company.vat:
             raise Warning(
                 _("Missing VAT number for company %s") % company.name)
