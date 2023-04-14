@@ -877,7 +877,12 @@ var FieldX2Many = AbstractManyField.extend({
                 .all(_.identity)
                 .value();
         case 'list':
-            return view.controller.is_valid();
+            // MODIFICATION OPENFIRE
+            if (view.controller.is_valid) {
+                return view.controller.is_valid();
+            }
+            return true;
+            // FIN DE MODIFICATION OPENFIRE
         }
         return true;
     },
@@ -909,13 +914,16 @@ var X2ManyViewManager = ViewManager.extend({
     },
     init: function(parent, dataset, views, flags, x2many_views) {
         // By default, render buttons and pager in X2M fields, but no sidebar
-        flags = _.extend({}, flags, {
+        // MODIFICATION OPENFIRE : defaults au lieu de extends pour conserver d'éventuelles modifs par surcharge
+        // voir of_web_widgets
+        flags = _.defaults({}, flags, {
             headless: false,
             search_view: false,
             action_buttons: true,
             pager: true,
             sidebar: false,
         });
+        // FIN DE MODIFICATION OPENFIRE
         this.control_panel = new ControlPanel(parent, "X2ManyControlPanel");
         this.set_cp_bus(this.control_panel.get_bus());
         this._super(parent, dataset, views, flags);
@@ -1764,6 +1772,7 @@ core.view_registry
 // OPENFIRE fin de modification OF
 
 return {
+    X2ManyViewManager: X2ManyViewManager, // AJOUT OPENFIRE
     FieldMany2ManyTags: FieldMany2ManyTags,
     AbstractManyField: AbstractManyField,
     FieldMany2One: FieldMany2One,
