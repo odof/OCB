@@ -32,13 +32,14 @@ class StockMove(models.Model):
         super(StockMove, self)._assign_picking_post_process(new=new)
         if new:
             picking = self.mapped('picking_id')
-            sale_orders = self.env['sale.order'].sudo().search(
-                [('procurement_group_id', '=', picking.group_id.id)])
-            for order in sale_orders:
-                picking.message_post_with_view(
-                    'mail.message_origin_link',
-                    values={'self': picking, 'origin': order},
-                    subtype_id=self.env.ref('mail.mt_note').id)
+            if picking.group_id:
+                sale_orders = self.env['sale.order'].sudo().search(
+                    [('procurement_group_id', '=', picking.group_id.id)])
+                for order in sale_orders:
+                    picking.message_post_with_view(
+                        'mail.message_origin_link',
+                        values={'self': picking, 'origin': order},
+                        subtype_id=self.env.ref('mail.mt_note').id)
     # OF Fin modification OpenFire
 
     def _prepare_move_split_vals(self, defaults):
