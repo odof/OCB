@@ -36,7 +36,12 @@ class SaleOrder(models.Model):
     @api.depends('procurement_group_id')
     def _compute_picking_ids(self):
         for order in self:
-            order.picking_ids = self.env['stock.picking'].search([('group_id', '=', order.procurement_group_id.id)]) if order.procurement_group_id else []
+            # OF Modification OpenFire
+            domain = [('origin', '=', order.name)]
+            if order.procurement_group_id:
+                domain = ['|', ('group_id', '=', order.procurement_group_id.id), ('origin', '=', order.name)]
+            order.picking_ids = self.env['stock.picking'].search(domain)
+            # OF Modification OpenFire
             order.delivery_count = len(order.picking_ids)
 
     @api.onchange('warehouse_id')
