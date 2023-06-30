@@ -37,9 +37,9 @@ class SaleOrder(models.Model):
     def _compute_picking_ids(self):
         for order in self:
             # OF Modification OpenFire
-            domain = [('origin', '=', order.name)]
+            domain = ['&', ('origin', '=', order.name), ('company_id', '=', order.company_id.id)]
             if order.procurement_group_id:
-                domain = ['|', ('group_id', '=', order.procurement_group_id.id), ('origin', '=', order.name)]
+                domain = ['|', ('group_id', '=', order.procurement_group_id.id)] + domain
             order.picking_ids = self.env['stock.picking'].search(domain)
             # OF Modification OpenFire
             order.delivery_count = len(order.picking_ids)
