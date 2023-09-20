@@ -4287,6 +4287,12 @@ msgstr ""
 "trouvé pour cette adresse."
 
 #. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "The partner can not join this channel"
+msgstr "Le partenaire ne peut pas joindre ce canal"
+
+#. module: mail
 #: code:addons/mail/models/mail_message.py:574
 #: code:addons/mail/models/mail_message.py:669
 #, python-format
@@ -4791,6 +4797,24 @@ msgid ""
 msgstr ""
 "Vous pouvez marquer n'importe quel message comme 'favoris', et les voir dans"
 " ce canal."
+
+#. module: mail
+#: cod:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not remove this partner from this channel"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on the record of other users"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on this field"
+msgstr ""
 
 #. module: mail
 #: code:addons/mail/models/res_users.py:45
