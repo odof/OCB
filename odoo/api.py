@@ -788,6 +788,11 @@ class Environment(Mapping):
         context = self.context if context is None else context
         return Environment(cr, uid, context)
 
+    def is_admin(self):
+        """ Return whether the current user has group "Access Rights", or is in
+            superuser mode. """
+        return self.user._is_admin()
+
     def ref(self, xml_id, raise_if_not_found=True):
         """ return the record corresponding to the given ``xml_id`` """
         return self['ir.model.data'].xmlid_to_object(xml_id, raise_if_not_found=raise_if_not_found)
