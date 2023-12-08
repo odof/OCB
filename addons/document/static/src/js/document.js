@@ -26,6 +26,9 @@ Sidebar.include({
                          attachment.name = _.str.sprintf(_t("%s (%s)"), attachment.name, i+1);
                      });
               });
+        _.each(attachments,function (a) {
+            a.name = _.escape(a.name);
+        });
         self._super(attachments);
     },
 });
