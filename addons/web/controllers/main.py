@@ -607,7 +607,7 @@ class Proxy(http.Controller):
         from werkzeug.wrappers import BaseResponse
 
         base_url = request.httprequest.base_url
-        return Client(request.httprequest.app, BaseResponse).get(path, base_url=base_url).data
+        return Client(http.root, BaseResponse).get(path, base_url=base_url).data
 
     @http.route('/web/proxy/post/<path:path>', type='http', auth='user', methods=['GET'])
     def post(self, path):
