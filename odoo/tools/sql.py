@@ -1,6 +1,23 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+def existing_tables(cr, tablenames):
+    """ Return the names of existing tables among ``tablenames``. """
+    query = """
+        SELECT c.relname
+          FROM pg_class c
+          JOIN pg_namespace n ON (n.oid = c.relnamespace)
+         WHERE c.relname IN %s
+           AND c.relkind IN ('r', 'v', 'm')
+           AND n.nspname = current_schema
+    """
+    cr.execute(query, [tuple(tablenames)])
+    return [row[0] for row in cr.fetchall()]
+
+def table_exists(cr, tablename):
+    """ Return whether the given table exists. """
+    return len(existing_tables(cr, {tablename})) == 1
+
 def drop_view_if_exists(cr, viewname):
     cr.execute("DROP view IF EXISTS %s CASCADE" % (viewname,))
     cr.commit()
