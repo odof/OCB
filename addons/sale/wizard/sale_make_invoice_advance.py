@@ -78,7 +78,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
             raise UserError(_('The value of the down payment amount must be positive.'))
         context = {'lang': order.partner_id.lang}
         if self.advance_payment_method == 'percentage':
-            amount = order.amount_untaxed * self.amount / 100
+            # OF Modification OpenFire
+            amount = round(order.amount_untaxed * self.amount / 100, 2)
+            # OF Fin modification OpenFire
             name = _("Down payment of %s%%") % (self.amount,)
         else:
             amount = self.amount
