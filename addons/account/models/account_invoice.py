@@ -851,8 +851,10 @@ class AccountInvoice(models.Model):
             total, total_currency, iml = inv.with_context(ctx).compute_invoice_totals(company_currency, iml)
 
             name = inv.name or '/'
-            if inv.payment_term_id:
-                totlines = inv.with_context(ctx).payment_term_id.with_context(currency_id=company_currency.id).compute(total, inv.date_invoice)[0]
+            # OF Modification OpenFire
+            totlines = inv.with_context(ctx).get_totlines(company_currency, total)
+            if totlines:
+                # OF Fin modification OpenFire
                 res_amount_currency = total_currency
                 ctx['date'] = inv._get_currency_rate_date()
                 for i, t in enumerate(totlines):
@@ -918,6 +920,16 @@ class AccountInvoice(models.Model):
             }
             inv.with_context(ctx).write(vals)
         return True
+
+    # OF Modification OpenFire
+    @api.multi
+    def get_totlines(self, company_currency, total):
+        self.ensure_one()
+        if self.payment_term_id:
+            return self.payment_term_id.with_context(currency_id=company_currency.id)\
+                       .compute(total, self.date_invoice)[0]
+        return []
+    # OF Fin modification OpenFire
 
     def _check_invoice_reference(self):
         for invoice in self:
