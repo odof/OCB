@@ -2404,6 +2404,7 @@ class BaseModel(object):
                                 ('text', 'char', column_type[1], '::' + column_type[1]),
                                 ('varchar', 'text', 'TEXT', ''),
                                 ('int4', 'float', column_type[1], '::' + column_type[1]),
+                                ('int4', 'integer', column_type[1], '::' + column_type[1]),  # OF - Pour le passage de Integer à BigInteger
                                 ('date', 'datetime', 'TIMESTAMP', '::TIMESTAMP'),
                                 ('timestamp', 'date', 'date', '::date'),
                                 ('numeric', 'float', column_type[1], '::' + column_type[1]),
