@@ -14,7 +14,10 @@ animation.registry.website_sale_payment = animation.Class.extend({
     var self = this;
     this._super();
     this.$target.on("click", "input[name='acquirer'], a.btn_payment_token", this.switchAcquirer.bind(this)).find("input[name='acquirer']:checked").click();
-    this.$target.on("submit", this.makePayment.bind(this));
+    var no_payment_required = document.getElementById('no_payment');
+    if (no_payment_required === null || no_payment_required === undefined) {
+      this.$target.on("submit", this.makePayment.bind(this));
+    };
     if (this.$("#checkbox_cgv").length) {
       this.$("#checkbox_cgv").on('change',function() {
         self.$("div.oe_sale_acquirer_button").find('input, button').prop("disabled", !this.checked);
