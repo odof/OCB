@@ -372,7 +372,7 @@ class GeventServer(CommonServer):
             signal.signal(signal.SIGQUIT, dumpstacks)
             signal.signal(signal.SIGUSR1, log_ormcache_stats)
             gevent.spawn(self.watchdog)
-        
+
         self.httpd = WSGIServer((self.interface, self.port), self.app)
         _logger.info('Evented Service (longpolling) running on %s:%s', self.interface, self.port)
         try:
@@ -413,6 +413,7 @@ class PreforkServer(CommonServer):
         self.socket = None
         self.workers_http = {}
         self.workers_cron = {}
+        self.workers_cron_next_dbindex = [0] * config['max_cron_threads']
         self.workers = {}
         self.generation = 0
         self.queue = []
@@ -469,7 +470,10 @@ class PreforkServer(CommonServer):
             _logger.debug("Worker (%s) unregistered", pid)
             try:
                 self.workers_http.pop(pid, None)
-                self.workers_cron.pop(pid, None)
+                worker = self.workers_cron.pop(pid, None)
+                if worker:
+                    db_index = os.read(worker.db_index_pipe[0], 3)
+                    self.workers_cron_next_dbindex.append(int(db_index or 0))
                 u = self.workers.pop(pid)
                 u.close()
             except OSError:
@@ -784,7 +788,8 @@ class WorkerCron(Worker):
         # process_work() below process a single database per call.
         # The variable db_index is keeping track of the next database to
         # process.
-        self.db_index = 0
+        self.db_index = multi.workers_cron_next_dbindex and multi.workers_cron_next_dbindex.pop(0) or 0
+        self.db_index_pipe = multi.pipe_new()
         self.watchdog_timeout = multi.cron_timeout  # Use a distinct value for CRON Worker
 
     def sleep(self):
@@ -835,11 +840,20 @@ class WorkerCron(Worker):
         else:
             self.db_index = 0
 
+    def close(self):
+        Worker.close(self)
+        os.close(self.db_index_pipe[0])
+        os.close(self.db_index_pipe[1])
+
     def start(self):
         os.nice(10)     # mommy always told me to be nice with others...
         Worker.start(self)
         if self.multi.socket:
             self.multi.socket.close()
+
+    def stop(self):
+        Worker.stop(self)
+        os.write(self.db_index_pipe[1], str(self.db_index))
 
 #----------------------------------------------------------
 # start/stop public api
