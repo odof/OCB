@@ -70,6 +70,11 @@ request = _request_stack()
     A global proxy that always redirect to the current request object.
 """
 
+# OF Modification OpenFire
+# Compteur d'appels rpc
+of_rpc_id = 0
+# OF Modification OpenFire
+
 def replace_request_password(args):
     # password is always 3rd argument in a request, we replace it in RPC logs
     # so it's easier to forward logs for diagnostics/debugging purposes...
@@ -94,11 +99,18 @@ def dispatch_rpc(service_name, method, params):
     This is pure Python code, the actual marshalling (from/to XML-RPC) is done
     in a upper layer.
     """
+    # OF Modification OpenFire
+    global of_rpc_id
+    of_current_id = 0
+    start_time = time.time()
+    # OF Fin modification OpenFire
     try:
         rpc_request_flag = rpc_request.isEnabledFor(logging.DEBUG)
         rpc_response_flag = rpc_response.isEnabledFor(logging.DEBUG)
         if rpc_request_flag or rpc_response_flag:
-            start_time = time.time()
+            # OF Modification OpenFire
+            # start_time = time.time()
+            # OF Fin modification OpenFire
             start_rss, start_vms = 0, 0
             if psutil:
                 start_rss, start_vms = memory_info(psutil.Process(os.getpid()))
@@ -112,6 +124,17 @@ def dispatch_rpc(service_name, method, params):
         elif service_name == 'db':
             dispatch = odoo.service.db.dispatch
         elif service_name == 'object':
+            # OF Modification OpenFire
+            of_rpc_id += 1
+            of_current_id = of_rpc_id
+            _logger.info(
+                u"OF DEBOGUE DEBUT %s %s - UID %s - appel rpc %s",
+                os.getpid(),
+                of_current_id,
+                params[1],
+                method,
+            )
+            # OF Fin modification OpenFire
             dispatch = odoo.service.model.dispatch
         elif service_name == 'report':
             dispatch = odoo.service.report.dispatch
@@ -139,6 +162,21 @@ def dispatch_rpc(service_name, method, params):
         _logger.exception(odoo.tools.exception_to_unicode(e))
         odoo.tools.debugger.post_mortem(odoo.tools.config, sys.exc_info())
         raise
+    # OF Modification OpenFire
+    finally:
+        if service_name == 'object':
+            of_duration = time.time() - start_time
+            _logger.info(
+                u"OF DEBOGUE FIN%s %s %s - UID %s - Temps : %ss - appel rpc %s %s",
+                min(int(of_duration // 10), 9),
+                os.getpid(),
+                of_current_id,
+                params[1],
+                of_duration,
+                method,
+                params[3:],
+            )
+    # OF Fin modification OpenFire
 
 def local_redirect(path, query=None, keep_hash=False, forward_debug=True, code=303):
     url = path
@@ -293,7 +331,7 @@ class WebRequest(object):
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
-           be used as response.""" 
+           be used as response."""
         self._failed = exception # prevent tx commit
         if not isinstance(exception, NO_POSTMORTEM) \
                 and not isinstance(exception, werkzeug.exceptions.HTTPException):
@@ -576,7 +614,7 @@ class JsonRequest(WebRequest):
         self.jsonp = jsonp
         request = None
         request_id = args.get('id')
-        
+
         if jsonp and self.httprequest.method == 'POST':
             # jsonp 2 steps step1 POST: save call
             def handler():
