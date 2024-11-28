@@ -1897,7 +1897,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.view_task_kanban
 msgid "Edit Task"
-msgstr "Modifié la Tâche"
+msgstr "Modifier la Tâche"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.edit_project
