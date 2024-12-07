@@ -2599,7 +2599,7 @@ var manualReconciliationLine = abstractReconciliationLine.extend({
     // quickly, resulting in a concurrent update server-side.
     markAsReconciled: _.throttle(function() {
         var self = this;
-        var type = this.data.reconciliation_type;
+        var type = this.data.reconciliation_type === 'account' ? 'account' : 'partner';
         var id = (type === "partner" ? this.data.partner_id : this.data.account_id);
         var model = (type === "partner" ? this.getParent().model_partner : this.getParent().model_account);
         model.call("mark_as_reconciled", [[id]]).then(function() {
